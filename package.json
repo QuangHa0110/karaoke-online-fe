@@ -64,6 +64,7 @@
     "react-jvectormap": "^0.0.1",
     "react-multi-carousel": "^2.8.2",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-player": "^2.11.0",
     "react-redux": "^7.2.0",
     "react-resizable": "^1.10.1",
     "react-router-dom": "^5.x",
