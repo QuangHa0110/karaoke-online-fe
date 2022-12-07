@@ -19,13 +19,10 @@ const mapStateToProps = ({ user }) => ({
 })
 
 const TopBar = ({ authorized, user }) => {
-  console.log('🚀 ~ file: index.js:22 ~ TopBar ~ user', user)
-
   return (
     <div className={style.topbar}>
       {!authorized ? (
         <>
-          {' '}
           <div className="mr-4 d-none d-sm-block">
             <Button type="primary" shape="round" onClick={() => history.push('/auth/login')}>
               Đăng nhập
