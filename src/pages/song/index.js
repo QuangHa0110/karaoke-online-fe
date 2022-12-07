@@ -3,11 +3,8 @@
 import { Button, Card, Row } from 'antd'
 import React, { useRef } from 'react'
 import ReactPlayer from 'react-player'
-import { FullScreen, useFullScreenHandle } from 'react-full-screen'
-import { Player } from 'video-react'
 
 const Song = () => {
-  const handle = useFullScreenHandle()
   return (
     <div style={{ width: '80%', margin: 'auto' }}>
       <Card>
