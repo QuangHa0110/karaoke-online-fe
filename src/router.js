@@ -13,6 +13,12 @@ const routes = [
     Component: lazy(() => import('pages/home')),
     exact: true,
   },
+  {
+    path: '/public/song/:id',
+    Component: lazy(() => import('pages/song')),
+    exact: true,
+  },
+ 
 
   // Nhạc trẻ karaoke
   {
