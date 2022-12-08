@@ -424,7 +424,7 @@ const Sidebar = ({
           </div>
         </PerfectScrollbar>
       </div>
-      <Tooltip title="Settings" placement="left">
+      {/* <Tooltip title="Settings" placement="left">
         <a
           role="button"
           tabIndex="0"
@@ -438,7 +438,7 @@ const Sidebar = ({
         >
           <i className="fe fe-settings" />
         </a>
-      </Tooltip>
+      </Tooltip> */}
       <Tooltip title="Switch Dark / Light Theme" placement="left">
         <a
           role="button"
