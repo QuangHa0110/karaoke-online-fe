@@ -1,6 +1,5 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~react-perfect-scrollbar/dist/css/styles.css';
-@import '~c3/c3.min.css';
 
 @import 'components/kit/vendors/antd/style';
 @import 'components/kit/vendors/bootstrap/style';
@@ -12,7 +11,7 @@
 @import 'components/kit/vendors/react-sortable-tree/style';
 @import 'components/kit/vendors/react-draft-wysiwyg/style';
 
-@import 'components/kit/core/style'; // Clean UI KIT styles
-@import 'components/cleanui/styles/style'; // Clean UI styles
+@import 'components/kit/core/style'; 
+@import 'components/cleanui/styles/style'; 
 
 
