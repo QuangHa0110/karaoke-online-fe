@@ -15,7 +15,7 @@ const ForgotPassword = () => {
   return (
     <div>
       <div className="text-center mb-5">
-        <Image src="../resources/images/karaoke-logo.svg" preview={false} />
+        <Image src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`} preview={false} />
       </div>
       <div className={`card ${style.container}`}>
         <div className="text-dark font-size-24 mb-4">

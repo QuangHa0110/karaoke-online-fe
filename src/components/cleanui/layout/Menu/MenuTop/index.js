@@ -44,13 +44,13 @@ const MenuTop = ({
     setSelectedKeys(selectedItem ? [selectedItem.key] : [])
   }
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     store.set('app.menu.selectedKeys', [e.key])
     setSelectedKeys([e.key])
   }
 
   const generateMenuItems = () => {
-    const generateItem = item => {
+    const generateItem = (item) => {
       const { key, title, url, icon, disabled, count } = item
       if (item.category) {
         return null
@@ -83,8 +83,8 @@ const MenuTop = ({
         </Menu.Item>
       )
     }
-    const generateSubmenu = items =>
-      items.map(menuItem => {
+    const generateSubmenu = (items) =>
+      items.map((menuItem) => {
         if (menuItem.children) {
           const subMenuTitle = (
             <span key={menuItem.key}>
@@ -101,7 +101,7 @@ const MenuTop = ({
         }
         return generateItem(menuItem)
       })
-    return menuData.map(menuItem => {
+    return menuData.map((menuItem) => {
       if (menuItem.roles && !menuItem.roles.includes(role)) {
         return null
       }
@@ -133,9 +133,8 @@ const MenuTop = ({
     >
       <div className={style.logoContainer}>
         <div className={style.logo}>
-          <img src="../resources/images/karaoke-logo.svg" className="mr-2" alt="Job Pi Ca" />
+          <img src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`} className="mr-2" alt="Karaoke Online" />
           <div className={style.name}>{logo}</div>
-          {logo === 'Clean UI Pro' && <div className={style.descr}>React</div>}
         </div>
       </div>
       <div className={style.navigation}>
