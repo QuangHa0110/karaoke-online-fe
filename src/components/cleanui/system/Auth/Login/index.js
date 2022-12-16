@@ -37,7 +37,7 @@ const Login = ({ dispatch, user, authProvider, logo }) => {
   return (
     <div>
       <div className="text-center mb-5">
-        <Link to="/">
+        <Link to="/public/home">
           <Image src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`} preview={false} />
         </Link>
         <h1 className="mb-5 px-3">

@@ -56,6 +56,9 @@ const Layout = ({ user, children, location: { pathname, search } }) => {
     // if (!isAuthLayout && !isUserAuthorized) {
     //   return <Redirect to="/auth/login" />
     // }
+    // if (pathname.includes('/public') && !isUserAuthorized) {
+    //   return <Redirect to="/public/home" />
+    // }
     if (!pathname.includes('/public') && !isUserAuthorized && !isAuthLayout) {
       return <Redirect to="/auth/login" />
     }

@@ -12,6 +12,7 @@ const STORED_SETTINGS = storedSettings => {
 
 const initialState = {
   ...STORED_SETTINGS({
+    previousPath: '',
     authProvider: 'jwt', // firebase, jwt
     logo: 'KaraokeOnline',
     locale: 'en-US',

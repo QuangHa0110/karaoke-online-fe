@@ -28,13 +28,25 @@ export function* LOGIN({ payload }) {
       loading: true,
     },
   })
-  const { authProvider: autProviderName } = yield select(state => state.settings)
+  const { authProvider: autProviderName } = yield select((state) => state.settings)
   const success = yield call(mapAuthProviders[autProviderName].login, email, password)
+  const user = yield select((state) => state.user)
+  console.log('🚀 ~ file: sagas.js:34 ~ function*LOGIN ~ user', user)
   if (success) {
     yield put({
       type: 'user/LOAD_CURRENT_ACCOUNT',
     })
-    yield history.push('/')
+    if (history.location.state && history.location.state.previousPath) {
+      yield history.push(history.location.state.previousPath)
+    } else {
+      yield history.push('/')
+    }
+    // if (previousPath) {
+    //   yield history.push(previousPath)
+    // } else {
+    //   yield history.push('/')
+    // }
+
     notification.success({
       message: 'Logged In',
       description: 'You have successfully logged in!',
@@ -58,7 +70,7 @@ export function* REGISTER({ payload }) {
       loading: true,
     },
   })
-  const { authProvider } = yield select(state => state.settings)
+  const { authProvider } = yield select((state) => state.settings)
   const success = yield call(mapAuthProviders[authProvider].register, email, password, name)
   if (success) {
     yield put({
@@ -87,7 +99,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
       loading: true,
     },
   })
-  const { authProvider } = yield select(state => state.settings)
+  const { authProvider } = yield select((state) => state.settings)
   const response = yield call(mapAuthProviders[authProvider].currentAccount)
   if (response) {
     const { id, email, name, avatar, role } = response
@@ -112,7 +124,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
 }
 
 export function* LOGOUT() {
-  const { authProvider } = yield select(state => state.settings)
+  const { authProvider } = yield select((state) => state.settings)
   yield call(mapAuthProviders[authProvider].logout)
   yield put({
     type: 'user/SET_STATE',

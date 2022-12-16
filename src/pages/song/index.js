@@ -1,12 +1,26 @@
 /* eslint-disable react/no-find-dom-node */
 /* eslint-disable no-unused-vars */
 import { LikeOutlined } from '@ant-design/icons'
-import { Button, Card, Col, List, Row } from 'antd'
+import { Button, Card, Col, List, notification, Row } from 'antd'
 import SongItem from 'components/home/SongItem'
-import React, { useRef } from 'react'
+import React from 'react'
 import ReactPlayer from 'react-player'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { history } from 'index'
+import userReducer from 'redux/user/reducers'
+import actions from 'redux/user/actions'
+import { CHANGE_SETTING } from 'redux/settings/sagas'
 
-const Song = () => {
+const mapStateToProps = ({ user }) => ({
+  user,
+  authorized: user.authorized,
+})
+
+const Song = (props) => {
+  const { user, authorized } = props
+  console.log('🚀 ~ file: index.js:20 ~ Song ~ props', props)
+  // console.log("🚀 ~ file: index.js:18 ~ Song ~ authorized", authorized)
   const data = [
     {
       imgLink: `${process.env.PUBLIC_URL}/resources/images/sliders/danh-mat-em.jpg`,
@@ -29,6 +43,17 @@ const Song = () => {
       singer: 'Quang Đăng Trần',
     },
   ]
+  const handleAddYourFavoriteSong = () => {
+    if (authorized) {
+      notification.success({
+        message: 'Thêm bài hát thành công',
+      })
+    } else {
+      // SET_PREVIOUS_PATH(props.location.pathname)
+
+      history.push('/auth/login', { previousPath: props.location.pathname })
+    }
+  }
   return (
     <div style={{ width: '80%', margin: 'auto' }}>
       <Card>
@@ -53,7 +78,13 @@ const Song = () => {
               <b>Ca sĩ:</b> Quang Đăng Trần
             </h5>
             <div style={{ width: '100%', textAlign: 'center', marginTop: '50px' }}>
-              <Button type="primary" size="large" shape="round" icon={<LikeOutlined />}>
+              <Button
+                type="primary"
+                size="large"
+                shape="round"
+                icon={<LikeOutlined />}
+                onClick={handleAddYourFavoriteSong}
+              >
                 Thêm vào danh sách bài hát yêu thích
               </Button>
             </div>
@@ -104,4 +135,4 @@ const Song = () => {
   )
 }
 
-export default Song
+export default withRouter(connect(mapStateToProps)(Song))
