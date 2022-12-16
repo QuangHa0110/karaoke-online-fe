@@ -65,7 +65,7 @@ const ProfileMenu = ({ dispatch, user }) => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <Link to="/auth/login" onClick={logout}>
+        <Link to="/" onClick={logout}>
           <i className="fe fe-log-out mr-2" />
           <FormattedMessage id="topBar.profileMenu.logout" />
         </Link>
