@@ -19,8 +19,6 @@ const mapStateToProps = ({ user }) => ({
 
 const Song = (props) => {
   const { user, authorized } = props
-  console.log('🚀 ~ file: index.js:20 ~ Song ~ props', props)
-  // console.log("🚀 ~ file: index.js:18 ~ Song ~ authorized", authorized)
   const data = [
     {
       imgLink: `${process.env.PUBLIC_URL}/resources/images/sliders/danh-mat-em.jpg`,
