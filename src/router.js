@@ -57,9 +57,16 @@ const routes = [
   // Nhạc theo ca sĩ
   {
     path: '/public/singer',
-    Component: lazy(() => import('pages/singer')),
+    Component: lazy(() => import('pages/singer/SingerListPage')),
     exact: true,
   },
+
+  {
+    path: '/public/singer/:id',
+    Component: lazy(() => import('pages/singer/SingerDetailPage')),
+    exact: true,
+  },
+
   // Quản lý tài khoản
   {
     path: '/manage/account',
