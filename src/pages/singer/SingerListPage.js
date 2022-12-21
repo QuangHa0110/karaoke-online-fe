@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { Card, List } from 'antd'
+import { SearchOutlined } from '@ant-design/icons'
+import { Button, Card, Col, Input, List, Pagination, Row } from 'antd'
 import React from 'react'
 import SingerItem from './components/SingerItem'
 
@@ -38,7 +39,30 @@ const Singer = () => {
     },
   ]
   return (
-    <div>
+    <div style={{ width: '80%', margin: 'auto' }}>
+      <Row
+        style={{
+          width: '60%',
+          margin: 'auto',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '30px',
+        }}
+      >
+        <Col span={20}>
+          <Input
+            size="large"
+            style={{ borderRadius: '10px', backgroundColor: '$gray-2' }}
+            prefix={<SearchOutlined />}
+            placeholder="Nhập từ khóa tìm kiếm"
+          />
+        </Col>
+        <Col span={3}>
+          <Button type="primary" size="large" style={{ borderRadius: '10px' }}>
+            Tìm kiếm
+          </Button>
+        </Col>
+      </Row>
       <Card title={<h3 style={{ fontWeight: 'bold' }}>DANH SÁCH CA SĨ</h3>}>
         <List
           grid={{
@@ -58,6 +82,8 @@ const Singer = () => {
           )}
         />
       </Card>
+      <br />
+      <Pagination style={{ textAlign: 'center' }} defaultCurrent={1} total={50} />;
     </div>
   )
 }
