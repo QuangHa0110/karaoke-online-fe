@@ -87,6 +87,11 @@ const routes = [
     Component: lazy(() => import('pages/admin/song-manage')),
     exact: true,
   },
+  {
+    path: '/public/search',
+    Component: lazy(() => import('pages/search-result/SearchResultPage')),
+    exact: true,
+  },
 
   // Auth Pages
   {
