@@ -2,6 +2,7 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Carousel, Col, Image, Input, List, Row } from 'antd'
 import SongItem from 'components/home/SongItem'
+import SearchForm from 'components/SearchForm'
 import React from 'react'
 import ReactPlayer from 'react-player'
 import Slider from 'react-slick'
@@ -50,7 +51,8 @@ const Home = () => {
 
   return (
     <div>
-      <Row
+      <SearchForm />
+      {/* <Row
         style={{
           width: '60%',
           margin: 'auto',
@@ -72,7 +74,7 @@ const Home = () => {
             Tìm kiếm
           </Button>
         </Col>
-      </Row>
+      </Row> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Slider {...settings}>
           <div>
