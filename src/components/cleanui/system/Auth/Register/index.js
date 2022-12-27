@@ -22,7 +22,10 @@ const Register = ({ dispatch, user }) => {
     <div>
       <div className="text-center mb-5">
         <Link to="/">
-          <Image src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`} preview={false} />
+          <Image
+            src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`}
+            preview={false}
+          />
         </Link>
       </div>
       <div className={`card ${style.container}`}>
