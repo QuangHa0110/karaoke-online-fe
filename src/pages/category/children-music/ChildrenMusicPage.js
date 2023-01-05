@@ -1,14 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { SearchOutlined } from '@ant-design/icons'
-import { Button, Card, Carousel, Col, Image, Input, List, Row } from 'antd'
-import SongItem from 'components/SongItem/SongItem'
+import { Card, List, Pagination } from 'antd'
 import SearchForm from 'components/SearchForm/SearchForm'
-import React from 'react'
-import ReactPlayer from 'react-player'
-import Slider from 'react-slick'
+import SongItem from 'components/SongItem/SongItem'
 import SongList from 'components/SongList/SongList'
+import React from 'react'
 
-const Home = () => {
+// Nhạc thiếu nhií
+const ChildrenMusic = () => {
   const data = [
     {
       imgLink: '../resources/images/sliders/danh-mat-em.jpg',
@@ -41,44 +39,18 @@ const Home = () => {
       singer: 'Quang Đăng Trần',
     },
   ]
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 2000,
-    autoplay: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-  }
-
   return (
-    <div>
+    <>
       <SearchForm />
       <div style={{ width: '80%', margin: 'auto' }}>
-        <Slider {...settings}>
-          <div>
-            <img src="../resources/images/sliders/da-lo-yeu-em-nhieu.jpg" alt="" />
-          </div>
-          <div>
-            <img src="../resources/images/sliders/danh-mat-em.jpg" alt="" />
-          </div>
-          <div>
-            <img src="../resources/images/sliders/dau-nhat-la-lang-im.jpg" alt="" />
-          </div>
-          <div>
-            <img src="../resources/images/sliders/beauty-and-a-beat.jpg" alt="" />
-          </div>
-        </Slider>
-        <br />
-        <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT MỚI NHẤT</h3>}>
+        <Card title={<h3 style={{ fontWeight: 'bold' }}>NHẠC THIẾU NHI KARAOKE</h3>}>
           <SongList data={data} />
         </Card>
         <br />
-        <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT HOT NHẤT</h3>}>
-          <SongList data={data} />
-        </Card>
+        <Pagination style={{ textAlign: 'center' }} defaultCurrent={1} total={50} />;
       </div>
-    </div>
+    </>
   )
 }
 
-export default Home
+export default ChildrenMusic

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { Card, List, Pagination } from 'antd'
+import { Card, Pagination } from 'antd'
 import SearchForm from 'components/SearchForm/SearchForm'
-import SongItem from 'components/SongItem/SongItem'
+import SongList from 'components/SongList/SongList'
 import React from 'react'
 
 // Nhạc rap
@@ -43,23 +43,7 @@ const RapMusic = () => {
       <SearchForm />
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card title={<h3 style={{ fontWeight: 'bold' }}>NHẠC RAP KARAOKE</h3>}>
-          <List
-            grid={{
-              gutter: 16,
-              xs: 1,
-              sm: 2,
-              md: 4,
-              lg: 4,
-              xl: 6,
-              xxl: 4,
-            }}
-            dataSource={data}
-            renderItem={(item) => (
-              <List.Item>
-                <SongItem item={item} />
-              </List.Item>
-            )}
-          />
+          <SongList data={data} />
         </Card>
         <br />
         <Pagination style={{ textAlign: 'center' }} defaultCurrent={1} total={50} />;
