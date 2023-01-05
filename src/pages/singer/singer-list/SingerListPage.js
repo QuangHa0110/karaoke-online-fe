@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Input, List, Pagination, Row } from 'antd'
+import SearchForm from 'components/SearchForm/SearchForm'
 import React from 'react'
 import SingerItem from './components/SingerItem'
 
@@ -39,52 +40,32 @@ const Singer = () => {
     },
   ]
   return (
-    <div style={{ width: '80%', margin: 'auto' }}>
-      <Row
-        style={{
-          width: '60%',
-          margin: 'auto',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '30px',
-        }}
-      >
-        <Col span={20}>
-          <Input
-            size="large"
-            style={{ borderRadius: '10px', backgroundColor: '$gray-2' }}
-            prefix={<SearchOutlined />}
-            placeholder="Nhập từ khóa tìm kiếm"
+    <>
+      <SearchForm />
+      <div style={{ width: '80%', margin: 'auto' }}>
+        <Card title={<h3 style={{ fontWeight: 'bold' }}>DANH SÁCH CA SĨ</h3>}>
+          <List
+            grid={{
+              gutter: 16,
+              xs: 1,
+              sm: 2,
+              md: 4,
+              lg: 4,
+              xl: 5,
+              xxl: 5,
+            }}
+            dataSource={data}
+            renderItem={(item) => (
+              <List.Item key={Math.random()}>
+                <SingerItem singer={item} />
+              </List.Item>
+            )}
           />
-        </Col>
-        <Col span={3}>
-          <Button type="primary" size="large" style={{ borderRadius: '10px' }}>
-            Tìm kiếm
-          </Button>
-        </Col>
-      </Row>
-      <Card title={<h3 style={{ fontWeight: 'bold' }}>DANH SÁCH CA SĨ</h3>}>
-        <List
-          grid={{
-            gutter: 16,
-            xs: 1,
-            sm: 2,
-            md: 4,
-            lg: 4,
-            xl: 5,
-            xxl: 5,
-          }}
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item key={Math.random()}>
-              <SingerItem singer={item} />
-            </List.Item>
-          )}
-        />
-      </Card>
-      <br />
-      <Pagination style={{ textAlign: 'center' }} defaultCurrent={1} total={50} />;
-    </div>
+        </Card>
+        <br />
+        <Pagination style={{ textAlign: 'center' }} defaultCurrent={1} total={50} />;
+      </div>
+    </>
   )
 }
 

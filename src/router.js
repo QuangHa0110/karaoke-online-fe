@@ -10,7 +10,7 @@ const routes = [
   // Trang chủ
   {
     path: '/public/home',
-    Component: lazy(() => import('pages/home')),
+    Component: lazy(() => import('pages/home/HomePage')),
     exact: true,
   },
   {
@@ -23,34 +23,34 @@ const routes = [
   // Nhạc trẻ karaoke
   {
     path: '/public/young-music',
-    Component: lazy(() => import('pages/category/young-music')),
+    Component: lazy(() => import('pages/category/young-music/YoungMusicPage')),
     exact: true,
   },
   // Nhạc trữ tình karaoke
   {
     path: '/public/lyrical-music',
-    Component: lazy(() => import('pages/category/lyrical-music')),
+    Component: lazy(() => import('pages/category/lyrical-music/LyricalMusicPage')),
     exact: true,
   },
 
   // Nhạc thiếu nhi karaoke
   {
     path: '/public/children-music',
-    Component: lazy(() => import('pages/category/children-music')),
+    Component: lazy(() => import('pages/category/children-music/ChildrenMusicPage')),
     exact: true,
   },
 
   // Nhạc giáng sinh karaoke
   {
     path: '/public/christmas-music',
-    Component: lazy(() => import('pages/category/christmas-music')),
+    Component: lazy(() => import('pages/category/christmas-music/ChristmasMusicPage')),
     exact: true,
   },
 
   // Nhạc rap karaoke
   {
     path: '/public/rap-music',
-    Component: lazy(() => import('pages/category/rap-music')),
+    Component: lazy(() => import('pages/category/rap-music/RapMusicPage')),
     exact: true,
   },
 
