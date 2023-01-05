@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Carousel, Col, Image, Input, List, Row } from 'antd'
-import SongItem from 'components/home/SongItem'
-import SearchForm from 'components/SearchForm'
+import SongItem from 'components/SongItem/SongItem'
+import SearchForm from 'components/SearchForm/SearchForm'
 import React from 'react'
 import ReactPlayer from 'react-player'
 import Slider from 'react-slick'

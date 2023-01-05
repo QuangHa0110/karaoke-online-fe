@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Avatar, Card, Col, List, Row } from 'antd'
-import SongItem from 'components/home/SongItem'
+import SongItem from 'components/SongItem/SongItem'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 

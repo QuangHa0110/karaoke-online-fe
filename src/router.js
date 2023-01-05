@@ -57,13 +57,13 @@ const routes = [
   // Nhạc theo ca sĩ
   {
     path: '/public/singer',
-    Component: lazy(() => import('pages/singer/SingerListPage')),
+    Component: lazy(() => import('pages/singer/singer-list/SingerListPage')),
     exact: true,
   },
 
   {
     path: '/public/singer/:id',
-    Component: lazy(() => import('pages/singer/SingerDetailPage')),
+    Component: lazy(() => import('pages/singer/singer-detail/SingerDetailPage')),
     exact: true,
   },
 

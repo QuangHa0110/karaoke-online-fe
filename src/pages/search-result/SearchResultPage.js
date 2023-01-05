@@ -3,9 +3,9 @@
 /* eslint-disable no-unused-vars */
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Empty, Input, List, Row } from 'antd'
-import SongItem from 'components/home/SongItem'
-import SearchForm from 'components/SearchForm'
-import SingerItem from 'pages/singer/components/SingerItem'
+import SongItem from 'components/SongItem/SongItem'
+import SearchForm from 'components/SearchForm/SearchForm'
+import SingerItem from 'pages/singer/singer-list/components/SingerItem'
 import React, { useState, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 

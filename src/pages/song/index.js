@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { LikeOutlined } from '@ant-design/icons'
 import { Button, Card, Col, List, notification, Row } from 'antd'
-import SongItem from 'components/home/SongItem'
+import SongItem from 'components/SongItem/SongItem'
 import React from 'react'
 import ReactPlayer from 'react-player'
 import { connect } from 'react-redux'

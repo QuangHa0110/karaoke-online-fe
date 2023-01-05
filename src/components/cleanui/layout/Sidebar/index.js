@@ -455,7 +455,7 @@ const Sidebar = ({
           {theme !== 'default' && <i className="fe fe-sun" />}
         </a>
       </Tooltip>
-      <Tooltip title="Set Primary Color" placement="left">
+      {/* <Tooltip title="Set Primary Color" placement="left">
         <a
           style={{ bottom: 'calc(50%)' }}
           className={`${style.cui__sidebar__toggleButton} ${style.color} ${
@@ -481,7 +481,7 @@ const Sidebar = ({
           />
           <i className="fe fe-package" />
         </a>
-      </Tooltip>
+      </Tooltip> */}
     </div>
   )
 }
