@@ -52,29 +52,6 @@ const Home = () => {
   return (
     <div>
       <SearchForm />
-      {/* <Row
-        style={{
-          width: '60%',
-          margin: 'auto',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '30px',
-        }}
-      >
-        <Col span={20}>
-          <Input
-            size="large"
-            style={{ borderRadius: '10px', backgroundColor: '$gray-2' }}
-            prefix={<SearchOutlined />}
-            placeholder="Nhập từ khóa tìm kiếm"
-          />
-        </Col>
-        <Col span={3}>
-          <Button type="primary" size="large" style={{ borderRadius: '10px' }}>
-            Tìm kiếm
-          </Button>
-        </Col>
-      </Row> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Slider {...settings}>
           <div>
