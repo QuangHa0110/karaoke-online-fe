@@ -25,6 +25,12 @@ const SearchForm = () => {
             onChange={(e) => {
               setKeyword(e.target.value)
             }}
+            onPressEnter={() => {
+              history.push({
+                pathname: '/public/search',
+                search: `keyword=${keyword}`,
+              })
+            }}
           />
         </Col>
         <Col span={3}>
