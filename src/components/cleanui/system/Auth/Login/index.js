@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { connect } from 'react-redux'
-import { Input, Button, Radio, Form, Tooltip, Image } from 'antd'
+import { Input, Button, Radio, Form, Tooltip, Image, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import style from '../style.module.scss'
 
@@ -38,7 +38,10 @@ const Login = ({ dispatch, user, authProvider, logo }) => {
     <div>
       <div className="text-center mb-5">
         <Link to="/public/home">
-          <Image src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`} preview={false} />
+          <Image
+            src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`}
+            preview={false}
+          />
         </Link>
         <h1 className="mb-5 px-3">
           <strong>Chào mừng bạn trở lại</strong>
@@ -47,25 +50,24 @@ const Login = ({ dispatch, user, authProvider, logo }) => {
       <div className={`card ${style.container}`}>
         <Form
           layout="vertical"
-          hideRequiredMark
+          requiredMark
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           className="mb-4"
-          initialValues={{ email: 'demo@sellpixels.com', password: 'demo123' }}
         >
           <Form.Item
-            name="email"
-            // label="Email"
-            rules={[{ required: true, message: 'Vui lòng nhập địa chỉ email' }]}
+            name="username"
+            label="Tên đăng nhập"
+            rules={[{ required: true, message: 'Vui lòng tên đăng nhập' }]}
           >
-            <Input size="large" placeholder="Email" />
+            <Input size="large" />
           </Form.Item>
           <Form.Item
             name="password"
-            // label="Password"
+            label="Mật khẩu"
             rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}
           >
-            <Input size="large" type="password" placeholder="Password" />
+            <Input.Password size="large" />
           </Form.Item>
           <Button
             type="primary"
@@ -77,9 +79,13 @@ const Login = ({ dispatch, user, authProvider, logo }) => {
             <strong>Đăng nhập</strong>
           </Button>
         </Form>
-        <Link to="/auth/forgot-password" className="kit__utils__link font-size-16">
-          Quên mật khẩu?
-        </Link>
+        <Row justify="end">
+          <Col>
+            <Link to="/auth/forgot-password" className="kit__utils__link font-size-16">
+              Quên mật khẩu?
+            </Link>
+          </Col>
+        </Row>
       </div>
       <div className="text-center pt-2 mb-auto">
         <span className="mr-2">Bạn chưa có tài khoản?</span>
