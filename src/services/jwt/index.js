@@ -1,67 +1,58 @@
+/* eslint-disable no-unused-vars */
+
+import Auth from 'layouts/Auth'
+import AuthAPI from 'services/api/auth.api'
+import UserAPI from 'services/api/user.api'
 import apiClient from 'services/axios'
 import store from 'store'
 
-export async function login(email, password) {
-  return apiClient
-    .post('/auth/login', {
-      email,
-      password,
-    })
-    .then(response => {
+export async function login(username, password) {
+  const payload = {
+    identifier: username,
+    password,
+  }
+
+  return AuthAPI.login(payload)
+    .then((response) => {
       if (response) {
-        const { accessToken } = response.data
-        if (accessToken) {
-          store.set('accessToken', accessToken)
+        const { jwt } = response.data
+        if (jwt) {
+          store.set('accessToken', jwt)
         }
         return response.data
       }
       return false
     })
-    .catch(err => console.log(err))
+    .catch((error) => console.log(error))
 }
 
-export async function register(email, password, name) {
-  return apiClient
-    .post('/auth/register', {
-      email,
-      password,
-      name,
-    })
-    .then(response => {
+export async function register(payload) {
+  return AuthAPI.register(payload)
+    .then((response) => {
       if (response) {
-        const { accessToken } = response.data
-        if (accessToken) {
-          store.set('accessToken', accessToken)
-        }
-        return response.data
+        return true
       }
       return false
     })
-    .catch(err => console.log(err))
+    .catch((error) => console.log(error))
 }
 
 export async function currentAccount() {
-  return apiClient
-    .get('/auth/account')
-    .then(response => {
+  return UserAPI.getCurrentUserInfo()
+    .then((response) => {
       if (response) {
-        const { accessToken } = response.data
-        if (accessToken) {
-          store.set('accessToken', accessToken)
-        }
         return response.data
       }
       return false
     })
-    .catch(err => console.log(err))
+    .catch((error) => console.log(error))
 }
 
 export async function logout() {
-  return apiClient
-    .get('/auth/logout')
-    .then(() => {
-      store.remove('accessToken')
-      return true
-    })
-    .catch(err => console.log(err))
+  try {
+    store.remove('accessToken')
+    return true
+  } catch (error) {
+    return (err) => console.log(err)
+  }
 }
