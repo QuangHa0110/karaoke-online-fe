@@ -21,6 +21,7 @@ export async function login(username, password) {
         }
         return response.data
       }
+      store.remove('accessToken')
       return false
     })
     .catch((error) => console.log(error))
@@ -43,6 +44,7 @@ export async function currentAccount() {
       if (response) {
         return response.data
       }
+      store.remove('accessToken')
       return false
     })
     .catch((error) => console.log(error))
