@@ -20,7 +20,7 @@ const Register = ({ dispatch, user }) => {
 
   return (
     <div>
-      <div className="text-center mb-5">
+      <div className="text-center mb-3">
         <Link to="/">
           <Image
             src={`${process.env.PUBLIC_URL}/resources/images/karaoke-logo.svg`}
@@ -33,29 +33,31 @@ const Register = ({ dispatch, user }) => {
           <strong>Chào mừng bạn đến với KaraokeOnline</strong>
         </div>
         <div className="mb-4">
-          <p>Cùng xây dựng một hồ sơ nổi bật và nhận được các cơ hội sự nghiệp lý tưởng</p>
+          <p>Hãy cùng thỏa sức đam mê, hát vui bất tận cùng chúng tôi</p>
         </div>
-        <Form
-          layout="vertical"
-          hideRequiredMark
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          className="mb-4"
-        >
-          <Form.Item name="name" rules={[{ required: true, message: 'Vui lòng nhập họ và tên' }]}>
-            <Input size="large" placeholder="Họ và tên" />
-          </Form.Item>
+        <Form layout="vertical" requiredMark onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
-            name="email"
-            rules={[{ required: true, message: 'Vui lòng nhập địa chỉ email của bạn' }]}
+            label="Tên đăng nhập"
+            name="username"
+            rules={[{ required: true, message: 'Vui lòng nhập họ và tên' }]}
           >
-            <Input size="large" placeholder="Email" />
+            <Input size="large" />
           </Form.Item>
           <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, type: 'email', message: 'Vui lòng nhập địa chỉ email của bạn' },
+            ]}
+          >
+            <Input size="large" />
+          </Form.Item>
+          <Form.Item
+            label="Mật khẩu"
             name="password"
             rules={[{ required: true, message: 'Vui lòng nhập mật khẩu của bạn' }]}
           >
-            <Input type="password" size="large" placeholder="Password" />
+            <Input.Password size="large" />
           </Form.Item>
           <Button
             type="primary"
@@ -67,16 +69,6 @@ const Register = ({ dispatch, user }) => {
             <strong>Đăng ký</strong>
           </Button>
         </Form>
-        {/* <div>
-          <span className="mr-1">By signing up, you agree to the</span>
-          <a href="#" onClick={e => e.preventDefault()} className="kit__utils__link">
-            Terms of Service
-          </a>{' '}
-          and{' '}
-          <a href="#" onClick={e => e.preventDefault()} className="kit__utils__link">
-            Privacy Policy
-          </a>
-        </div> */}
       </div>
       <div className="text-center pt-2 mb-auto">
         <span className="mr-2">Bạn đã có tài khoản?</span>
