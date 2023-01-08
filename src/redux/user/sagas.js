@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { all, takeEvery, put, call, select } from 'redux-saga/effects'
 import { notification } from 'antd'
 import { history } from 'index'
@@ -10,7 +11,31 @@ const mapAuthProviders = {
     register: jwt.register,
     currentAccount: jwt.currentAccount,
     logout: jwt.logout,
+    forgotPassword: jwt.forgotPassword,
   },
+}
+
+export function* FORGOT_PASSWORD({ payload }) {
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const { authProvider: autProviderName } = yield select((state) => state.settings)
+  const success = yield call(mapAuthProviders[autProviderName].forgotPassword, payload)
+  if (success) {
+    notification.success({
+      message:
+        'Hệ thống đã gửi email xác nhận lấy lại mật khẩu đến email của bạn. Vui lòng kiểm tra email nhận được',
+    })
+  }
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
 }
 
 export function* LOGIN({ payload }) {
@@ -133,6 +158,7 @@ export default function* rootSaga() {
     takeEvery(actions.REGISTER, REGISTER),
     takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     takeEvery(actions.LOGOUT, LOGOUT),
+    takeEvery(actions.FORGOT_PASSWORD, FORGOT_PASSWORD),
     LOAD_CURRENT_ACCOUNT(), // run once on app load to check user auth
   ])
 }

@@ -38,6 +38,17 @@ export async function register(payload) {
     .catch((error) => console.log(error))
 }
 
+export async function forgotPassword(payload) {
+  return AuthAPI.forgotPassword(payload)
+    .then((response) => {
+      if (response) {
+        return true
+      }
+      return false
+    })
+    .catch((error) => console.log(error))
+}
+
 export async function currentAccount() {
   if (store.get('accessToken')) {
     return UserAPI.getCurrentUserInfo()
