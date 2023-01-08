@@ -39,15 +39,18 @@ export async function register(payload) {
 }
 
 export async function currentAccount() {
-  return UserAPI.getCurrentUserInfo()
-    .then((response) => {
-      if (response) {
-        return response.data
-      }
-      store.remove('accessToken')
-      return false
-    })
-    .catch((error) => console.log(error))
+  if (store.get('accessToken')) {
+    return UserAPI.getCurrentUserInfo()
+      .then((response) => {
+        if (response) {
+          return response.data
+        }
+        store.remove('accessToken')
+        return false
+      })
+      .catch((error) => console.log(error))
+  }
+  return false
 }
 
 export async function logout() {
