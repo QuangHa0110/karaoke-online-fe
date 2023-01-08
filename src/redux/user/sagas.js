@@ -14,7 +14,7 @@ const mapAuthProviders = {
 }
 
 export function* LOGIN({ payload }) {
-  const { email, password } = payload
+  const { username, password } = payload
   yield put({
     type: 'user/SET_STATE',
     payload: {
@@ -22,7 +22,7 @@ export function* LOGIN({ payload }) {
     },
   })
   const { authProvider: autProviderName } = yield select((state) => state.settings)
-  const success = yield call(mapAuthProviders[autProviderName].login, email, password)
+  const success = yield call(mapAuthProviders[autProviderName].login, username, password)
   if (success) {
     yield put({
       type: 'user/LOAD_CURRENT_ACCOUNT',
@@ -96,7 +96,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
         name,
         email,
         avatar,
-        role,
+        role: role.name,
         authorized: true,
       },
     })
@@ -124,6 +124,7 @@ export function* LOGOUT() {
       loading: false,
     },
   })
+  yield history.push('/auth/login')
 }
 
 export default function* rootSaga() {
