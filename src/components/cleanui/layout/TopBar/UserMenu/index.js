@@ -10,17 +10,11 @@ import styles from './style.module.scss'
 const mapStateToProps = ({ user }) => ({ user })
 
 const ProfileMenu = ({ dispatch, user }) => {
-  const [count, setCount] = useState(7)
-
-  const logout = e => {
+  const logout = (e) => {
     e.preventDefault()
     dispatch({
       type: 'user/LOGOUT',
     })
-  }
-
-  const addCount = () => {
-    setCount(count + 1)
   }
 
   const menu = (
@@ -58,7 +52,7 @@ const ProfileMenu = ({ dispatch, user }) => {
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <a href="#" onClick={e => e.preventDefault()}>
+        <a href="#" onClick={(e) => e.preventDefault()}>
           <i className="fe fe-user mr-2" />
           <FormattedMessage id="topBar.profileMenu.editProfile" />
         </a>
@@ -72,13 +66,61 @@ const ProfileMenu = ({ dispatch, user }) => {
       </Menu.Item>
     </Menu>
   )
+  const items = [
+    {
+      key: Math.random(),
+      label: (
+        <>
+          <strong>
+            <FormattedMessage id="topBar.profileMenu.hello" />, {user.name || 'Anonymous'}
+          </strong>
+          <div>
+            <strong>
+              <FormattedMessage id="topBar.profileMenu.role" />:{' '}
+            </strong>
+            {user.role || '—'}
+          </div>
+          <Menu.Divider />
+        </>
+      ),
+    },
+    {
+      key: Math.random(),
+      label: (
+        <>
+          <div>
+            <strong>
+              <FormattedMessage id="topBar.profileMenu.email" />:{' '}
+            </strong>
+            {user.email || '—'}
+          </div>
+          <Menu.Divider />
+        </>
+      ),
+    },
+    {
+      key: Math.random(),
+      label: (
+        <a href="#" onClick={(e) => e.preventDefault()}>
+          <i className="fe fe-user mr-2" />
+          <FormattedMessage id="topBar.profileMenu.editProfile" />
+        </a>
+      ),
+    },
+    {
+      key: Math.random(),
+      label: (
+        <Link to="/" onClick={logout}>
+          <i className="fe fe-log-out mr-2" />
+          <FormattedMessage id="topBar.profileMenu.logout" />
+        </Link>
+      ),
+    },
+  ]
   return (
-    <Dropdown overlay={menu} trigger={['click']} onVisibleChange={addCount}>
+    <Dropdown menu={{ items }} trigger={['click']}>
       <div className={styles.dropdown}>
-        {/* <Badge count={count}> */}
         <Avatar className={styles.avatar} shape="circle" size="large" icon={<UserOutlined />} />
-
-        {/* </Badge> */}
       </div>
     </Dropdown>
   )
