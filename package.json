@@ -29,6 +29,7 @@
       "stylelint"
     ]
   },
+  "proxy": "http://localhost:1337",
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "antd": "4.x",
