@@ -30,8 +30,6 @@ export function* LOGIN({ payload }) {
   })
   const { authProvider: autProviderName } = yield select((state) => state.settings)
   const success = yield call(mapAuthProviders[autProviderName].login, email, password)
-  const user = yield select((state) => state.user)
-  console.log('🚀 ~ file: sagas.js:34 ~ function*LOGIN ~ user', user)
   if (success) {
     yield put({
       type: 'user/LOAD_CURRENT_ACCOUNT',
@@ -41,15 +39,9 @@ export function* LOGIN({ payload }) {
     } else {
       yield history.push('/')
     }
-    // if (previousPath) {
-    //   yield history.push(previousPath)
-    // } else {
-    //   yield history.push('/')
-    // }
 
     notification.success({
-      message: 'Logged In',
-      description: 'You have successfully logged in!',
+      message: 'Đăng nhập thành công',
     })
   }
   if (!success) {
