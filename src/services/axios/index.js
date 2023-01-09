@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from 'store'
 import { logout } from '../jwt'
 
-const BASE_URL = '/'
+const BASE_URL = '/api'
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
