@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { Input, Button, Form, Image, notification } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import AuthAPI from 'services/api/auth.api'
 import { connect } from 'react-redux'
 import style from '../style.module.scss'
@@ -9,12 +9,18 @@ import style from '../style.module.scss'
 const mapStateToProps = ({ user, dispatch }) => ({ user, dispatch })
 
 const ResetPassword = ({ dispatch, user }) => {
-  
+  const { search } = useLocation()
+  const searchParam = new URLSearchParams(search)
+
   const onFinish = (values) => {
-    // dispatch({
-    //   type: 'user/FORGOT_PASSWORD',
-    //   payload: values,
-    // })
+    const payload = {
+      ...values,
+      code: searchParam.get('code'),
+    }
+    dispatch({
+      type: 'user/RESET_PASSWORD',
+      payload,
+    })
   }
 
   const onFinishFailed = (errorInfo) => {

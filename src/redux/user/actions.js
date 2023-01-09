@@ -5,6 +5,7 @@ const actions = {
   LOAD_CURRENT_ACCOUNT: 'user/LOAD_CURRENT_ACCOUNT',
   LOGOUT: 'user/LOGOUT',
   FORGOT_PASSWORD: 'user/FORGOT_PASSWORD',
+  RESET_PASSWORD: 'user/RESET_PASSWORD',
 }
 
 export default actions

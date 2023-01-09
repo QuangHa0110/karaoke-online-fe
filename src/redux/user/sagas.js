@@ -12,6 +12,7 @@ const mapAuthProviders = {
     currentAccount: jwt.currentAccount,
     logout: jwt.logout,
     forgotPassword: jwt.forgotPassword,
+    resetPassword: jwt.resetPassword,
   },
 }
 
@@ -36,6 +37,28 @@ export function* FORGOT_PASSWORD({ payload }) {
       loading: false,
     },
   })
+}
+export function* RESET_PASSWORD({ payload }) {
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const { authProvider: autProviderName } = yield select((state) => state.settings)
+  const success = yield call(mapAuthProviders[autProviderName].resetPassword, payload)
+  if (success) {
+    notification.success({
+      message: 'Đổi mật khẩu thành công',
+    })
+  }
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+  yield history.push('/auth/login')
 }
 
 export function* LOGIN({ payload }) {
@@ -87,8 +110,7 @@ export function* REGISTER({ payload }) {
     })
     yield history.push('/')
     notification.success({
-      message: 'Succesful Registered',
-      description: 'You have successfully registered!',
+      message: 'Đăng ký tài khoản thành công',
     })
   }
   if (!success) {
@@ -159,6 +181,7 @@ export default function* rootSaga() {
     takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     takeEvery(actions.LOGOUT, LOGOUT),
     takeEvery(actions.FORGOT_PASSWORD, FORGOT_PASSWORD),
+    takeEvery(actions.RESET_PASSWORD, RESET_PASSWORD),
     LOAD_CURRENT_ACCOUNT(), // run once on app load to check user auth
   ])
 }

@@ -49,6 +49,17 @@ export async function forgotPassword(payload) {
     .catch((error) => console.log(error))
 }
 
+export async function resetPassword(payload) {
+  return AuthAPI.resetPassword(payload)
+    .then((response) => {
+      if (response) {
+        return true
+      }
+      return false
+    })
+    .catch((error) => console.log(error))
+}
+
 export async function currentAccount() {
   if (store.get('accessToken')) {
     return UserAPI.getCurrentUserInfo()
