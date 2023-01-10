@@ -1,12 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Input, List, Pagination, Row } from 'antd'
 import SearchForm from 'components/SearchForm/SearchForm'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import qs from 'qs'
+import SingerAPI from 'services/api/singer.api'
+import apiClient from 'services/axios'
+import config from 'services/api/config'
 import SingerItem from './components/SingerItem'
 
+const mapStateToProps = ({ singer, dispatch }) => ({
+  dispatch,
+  singer,
+})
 // Danh sách ca sĩ
-const Singer = () => {
+const SingerListPage = ({ dispatch, singer }) => {
+  
+  useEffect(() => {
+    dispatch({
+      type: 'singer/GET_SINGERS',
+      payload: {
+        populate: '*',
+      },
+    })
+  }, [])
   const data = [
     {
       id: Math.random(),
@@ -54,7 +73,7 @@ const Singer = () => {
               xl: 5,
               xxl: 5,
             }}
-            dataSource={data}
+            dataSource={singer.singerList}
             renderItem={(item) => (
               <List.Item key={Math.random()}>
                 <SingerItem singer={item} />
@@ -69,4 +88,4 @@ const Singer = () => {
   )
 }
 
-export default Singer
+export default connect(mapStateToProps)(SingerListPage)
