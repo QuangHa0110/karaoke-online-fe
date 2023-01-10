@@ -1,22 +1,22 @@
+/* eslint-disable no-unused-vars */
 import apiClient from 'services/axios'
 import axios from 'axios'
 import qs from 'qs'
 
-const source = axios.CancelToken.source()
+// const source = axios.CancelToken.source()
 const conf = {
-  cancelToken: source.token,
-  paramsSerializer: params => {
-    return qs.stringify(params, { skipNulls: true, arrayFormat: 'repeat' })
+  // cancelToken: source.token,
+  paramsSerializer: (params) => {
+    return qs.stringify(params, { skipNulls: true })
   },
 }
 
 const config = {
   get: (url, params) => {
-    if(params){
-        return apiClient.get(url, { ...params, ...conf })
+    if (params) {
+      return apiClient.get(url, params)
     }
     return apiClient.get(url)
-    
   },
   post: (url, payload) => {
     return apiClient.post(url, payload)
@@ -27,9 +27,10 @@ const config = {
   patch: (url, payload) => {
     return apiClient.patch(url, payload)
   },
-  delete: url => {
+  delete: (url) => {
     return apiClient.delete(url)
   },
 }
+ 
 
 export default config
