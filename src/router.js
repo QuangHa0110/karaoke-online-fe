@@ -105,6 +105,12 @@ const routes = [
     exact: true,
   },
   {
+    path: '/auth/reset-password',
+    Component: lazy(() => import('pages/auth/reset-password/ResetPassword')),
+    exact: true,
+  },
+  
+  {
     path: '/auth/register',
     Component: lazy(() => import('pages/auth/register')),
     exact: true,

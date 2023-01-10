@@ -47,8 +47,6 @@ const Song = (props) => {
         message: 'Thêm bài hát thành công',
       })
     } else {
-      // SET_PREVIOUS_PATH(props.location.pathname)
-
       history.push('/auth/login', { previousPath: props.location.pathname })
     }
   }

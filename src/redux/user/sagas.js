@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { all, takeEvery, put, call, select } from 'redux-saga/effects'
 import { notification } from 'antd'
 import { history } from 'index'
@@ -10,11 +11,12 @@ const mapAuthProviders = {
     register: jwt.register,
     currentAccount: jwt.currentAccount,
     logout: jwt.logout,
+    forgotPassword: jwt.forgotPassword,
+    resetPassword: jwt.resetPassword,
   },
 }
 
-export function* LOGIN({ payload }) {
-  const { email, password } = payload
+export function* FORGOT_PASSWORD({ payload }) {
   yield put({
     type: 'user/SET_STATE',
     payload: {
@@ -22,7 +24,53 @@ export function* LOGIN({ payload }) {
     },
   })
   const { authProvider: autProviderName } = yield select((state) => state.settings)
-  const success = yield call(mapAuthProviders[autProviderName].login, email, password)
+  const success = yield call(mapAuthProviders[autProviderName].forgotPassword, payload)
+  if (success) {
+    notification.success({
+      message:
+        'Hệ thống đã gửi email xác nhận lấy lại mật khẩu đến email của bạn. Vui lòng kiểm tra email nhận được',
+    })
+  }
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+export function* RESET_PASSWORD({ payload }) {
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const { authProvider: autProviderName } = yield select((state) => state.settings)
+  const success = yield call(mapAuthProviders[autProviderName].resetPassword, payload)
+  if (success) {
+    notification.success({
+      message: 'Đổi mật khẩu thành công',
+    })
+  }
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+  yield history.push('/auth/login')
+}
+
+export function* LOGIN({ payload }) {
+  const { username, password } = payload
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const { authProvider: autProviderName } = yield select((state) => state.settings)
+  const success = yield call(mapAuthProviders[autProviderName].login, username, password)
   if (success) {
     yield put({
       type: 'user/LOAD_CURRENT_ACCOUNT',
@@ -48,7 +96,6 @@ export function* LOGIN({ payload }) {
 }
 
 export function* REGISTER({ payload }) {
-  const { email, password, name } = payload
   yield put({
     type: 'user/SET_STATE',
     payload: {
@@ -56,15 +103,14 @@ export function* REGISTER({ payload }) {
     },
   })
   const { authProvider } = yield select((state) => state.settings)
-  const success = yield call(mapAuthProviders[authProvider].register, email, password, name)
+  const success = yield call(mapAuthProviders[authProvider].register, payload)
   if (success) {
     yield put({
       type: 'user/LOAD_CURRENT_ACCOUNT',
     })
     yield history.push('/')
     notification.success({
-      message: 'Succesful Registered',
-      description: 'You have successfully registered!',
+      message: 'Đăng ký tài khoản thành công',
     })
   }
   if (!success) {
@@ -85,7 +131,9 @@ export function* LOAD_CURRENT_ACCOUNT() {
     },
   })
   const { authProvider } = yield select((state) => state.settings)
+
   const response = yield call(mapAuthProviders[authProvider].currentAccount)
+
   if (response) {
     const { id, email, name, avatar, role } = response
     yield put({
@@ -95,7 +143,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
         name,
         email,
         avatar,
-        role,
+        role: role.name,
         authorized: true,
       },
     })
@@ -123,6 +171,7 @@ export function* LOGOUT() {
       loading: false,
     },
   })
+  yield history.push('/auth/login')
 }
 
 export default function* rootSaga() {
@@ -131,6 +180,8 @@ export default function* rootSaga() {
     takeEvery(actions.REGISTER, REGISTER),
     takeEvery(actions.LOAD_CURRENT_ACCOUNT, LOAD_CURRENT_ACCOUNT),
     takeEvery(actions.LOGOUT, LOGOUT),
+    takeEvery(actions.FORGOT_PASSWORD, FORGOT_PASSWORD),
+    takeEvery(actions.RESET_PASSWORD, RESET_PASSWORD),
     LOAD_CURRENT_ACCOUNT(), // run once on app load to check user auth
   ])
 }
