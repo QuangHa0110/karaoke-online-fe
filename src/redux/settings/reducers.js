@@ -15,7 +15,7 @@ const initialState = {
     previousPath: '',
     authProvider: 'jwt', // firebase, jwt
     logo: 'KaraokeOnline',
-    locale: 'en-US',
+    locale: 'vi-VN',
     isSidebarOpen: false,
     isSupportChatOpen: false,
     isMobileView: false,

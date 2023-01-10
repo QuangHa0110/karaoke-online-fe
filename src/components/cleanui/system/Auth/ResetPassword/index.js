@@ -1,18 +1,25 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { Input, Button, Form, Image, notification } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import AuthAPI from 'services/api/auth.api'
 import { connect } from 'react-redux'
 import style from '../style.module.scss'
 
 const mapStateToProps = ({ user, dispatch }) => ({ user, dispatch })
 
-const ForgotPassword = ({ dispatch, user }) => {
+const ResetPassword = ({ dispatch, user }) => {
+  const { search } = useLocation()
+  const searchParam = new URLSearchParams(search)
+
   const onFinish = (values) => {
+    const payload = {
+      ...values,
+      code: searchParam.get('code'),
+    }
     dispatch({
-      type: 'user/FORGOT_PASSWORD',
-      payload: values,
+      type: 'user/RESET_PASSWORD',
+      payload,
     })
   }
 
@@ -30,7 +37,7 @@ const ForgotPassword = ({ dispatch, user }) => {
       </div>
       <div className={`card ${style.container}`}>
         <div className="text-dark font-size-24 mb-4">
-          <strong>Lấy lại mật khẩu</strong>
+          <strong>Đặt lại mật khẩu</strong>
         </div>
         <Form
           layout="vertical"
@@ -40,14 +47,27 @@ const ForgotPassword = ({ dispatch, user }) => {
           className="mb-4"
         >
           <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, type: 'email', message: 'Vui lòng nhập địa chỉ email' }]}
+            label="Mật khẩu mới"
+            name="password"
+            rules={[{ required: true, message: 'Vui lòng nhập mật khẩu của bạn' }]}
           >
-            <Input size="large" placeholder="example@email.com" />
+            <Input.Password size="large" />
           </Form.Item>
-          <Button type="primary" htmlType="submit" size="large" className="text-center w-100" loading={user.loading}>
-            <strong>Lấy lại mật khẩu</strong>
+          <Form.Item
+            label="Xác nhận lại mật khẩu"
+            name="passwordConfirmation"
+            rules={[{ required: true, message: 'Vui lòng nhập lại mật khẩu' }]}
+          >
+            <Input.Password size="large" />
+          </Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            className="text-center w-100"
+            loading={user.loading}
+          >
+            <strong>Đặt lại mật khẩu</strong>
           </Button>
         </Form>
         <Link to="/auth/login" className="kit__utils__link font-size-16">
@@ -59,4 +79,4 @@ const ForgotPassword = ({ dispatch, user }) => {
   )
 }
 
-export default connect(mapStateToProps)(ForgotPassword)
+export default connect(mapStateToProps)(ResetPassword)
