@@ -12,3 +12,11 @@ export const MUSIC_GENRE= {
     LYRICAL_MUSIC: 'LYRICAL_MUSIC',
     CHRISTMAS_MUSIC: 'CHRISTMAS_MUSIC',
 }
+
+export const MUSIC_GENRE_LABEL= {
+    YOUNG_MUSIC: 'Nhạc trẻ karaoke',
+    RAP_MUSIC: 'Nhạc rap karaoke',
+    CHILDREN_MUSIC: 'Nhạc thiếu nhi karaoke',
+    LYRICAL_MUSIC: 'Nhạc trữ tình karaoke',
+    CHRISTMAS_MUSIC: 'Nhạc xuân, giáng sinh karaoke',
+}
