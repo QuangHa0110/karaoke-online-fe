@@ -2,6 +2,7 @@
 import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 import SingerAPI from 'services/api/singer.api'
 import SongAPI from 'services/api/song.api'
+import { MUSIC_GENRE } from 'services/ultis/constants'
 import actions from './actions'
 
 export function* GET_SONGS({ payload }) {
@@ -72,9 +73,49 @@ export function* GET_LATEST_SONGS() {
   }
 }
 
+export function* GET_SONGS_BY_GENRE({ payload }) {
+  yield put({
+    type: 'song/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const body = {
+    populate: '*',
+    'pagination[page]': payload.current,
+    'pagination[pageSize]': payload.pageSize,
+    sort: ['name:asc'],
+    filters: {
+      genre: {
+        $eq: payload.genre,
+      },
+    },
+  }
+  const success = yield call(SongAPI.getSongs, body)
+
+  if (success) {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        songsByGenre: success.data.data,
+        totalSongsByGenre: success.data.meta.pagination.total,
+        loading: false,
+      },
+    })
+  } else {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        loading: false,
+      },
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.GET_SONGS, GET_SONGS),
     takeEvery(actions.GET_LATEST_SONGS, GET_LATEST_SONGS),
+    takeEvery(actions.GET_SONGS_BY_GENRE, GET_SONGS_BY_GENRE),
   ])
 }
