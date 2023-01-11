@@ -6,6 +6,7 @@ const initialState = {
   singerList: [],
   currentSinger: null, 
   songsOfCurrentSinger: [],
+  totalSongOfCurrentSinger: 0,
   pagination: {
     current: DEFAULT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,

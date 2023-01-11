@@ -2,6 +2,7 @@
 import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 import SingerAPI from 'services/api/singer.api'
 import SongAPI from 'services/api/song.api'
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'services/ultis/constants'
 import actions from './actions'
 
 export function* GET_SINGERS({ payload }) {
@@ -44,6 +45,14 @@ export function* GET_SINGER_BY_ID({ payload }) {
 
   if (success) {
     yield put({
+      type: 'singer/GET_SONGS_OF_SINGER',
+      payload: {
+        id: payload.id,
+        page: DEFAULT_PAGE,
+        pageSize: DEFAULT_PAGE_SIZE,
+      },
+    })
+    yield put({
       type: 'singer/SET_STATE',
       payload: {
         currentSinger: success.data.data,
@@ -75,6 +84,8 @@ export function* GET_SONGS_OF_SINGER({ payload }) {
         },
       },
     },
+    'pagination[page]': payload.page,
+    'pagination[pageSize]': payload.pageSize,
     populate: '*',
   }
   const songs = yield call(SongAPI.getSongs, body)
@@ -84,6 +95,7 @@ export function* GET_SONGS_OF_SINGER({ payload }) {
       type: 'singer/SET_STATE',
       payload: {
         songsOfCurrentSinger: songs.data.data,
+        totalSongOfCurrentSinger: songs.data.meta.pagination.total,
         loading: false,
       },
     })
