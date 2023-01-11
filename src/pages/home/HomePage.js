@@ -1,14 +1,21 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Carousel, Col, Image, Input, List, Row } from 'antd'
 import SongItem from 'components/SongItem/SongItem'
 import SearchForm from 'components/SearchForm/SearchForm'
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactPlayer from 'react-player'
 import Slider from 'react-slick'
 import SongList from 'components/SongList/SongList'
+import { connect } from 'react-redux'
 
-const Home = () => {
+const mapStateToProps = ({ song, dispatch }) => ({
+  dispatch,
+  song,
+})
+
+const Home = ({ song, dispatch }) => {
   const data = [
     {
       imgLink: '../resources/images/sliders/danh-mat-em.jpg',
@@ -50,6 +57,12 @@ const Home = () => {
     slidesToScroll: 1,
   }
 
+  useEffect(() => {
+    dispatch({
+      type: 'song/GET_LATEST_SONGS',
+    })
+  }, [])
+
   return (
     <div>
       <SearchForm />
@@ -70,15 +83,15 @@ const Home = () => {
         </Slider>
         <br />
         <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT MỚI NHẤT</h3>}>
-          <SongList data={data} />
+          <SongList data={song.latestSongs} />
         </Card>
         <br />
         <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT HOT NHẤT</h3>}>
-          <SongList data={data} />
+          <SongList data={song.latestSongs} />
         </Card>
       </div>
     </div>
   )
 }
 
-export default Home
+export default connect(mapStateToProps)(Home)
