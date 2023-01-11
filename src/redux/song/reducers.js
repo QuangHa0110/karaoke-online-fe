@@ -2,6 +2,8 @@ import actions from './actions'
 
 const initialState = {
   latestSongs: [],
+  totalSongsByGenre: 0,
+  songsByGenre: [],
   loading: false,
 }
 
