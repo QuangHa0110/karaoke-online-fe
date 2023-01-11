@@ -7,7 +7,7 @@ const SongAPI = {
         ...payload,
       },
     }),
-  getSongById: (id) => config.get(`/song/${id}`),
+  getSongById: (id) => config.get(`/songs/${id}`),
 }
 
 export default SongAPI
