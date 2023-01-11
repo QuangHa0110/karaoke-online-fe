@@ -1,56 +1,60 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { Card, List, Pagination } from 'antd'
+import { Card, Pagination } from 'antd'
 import SearchForm from 'components/SearchForm/SearchForm'
-import SongItem from 'components/SongItem/SongItem'
 import SongList from 'components/SongList/SongList'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MUSIC_GENRE } from 'services/ultis/constants'
 
+const mapStateToProps = ({ song, dispatch }) => ({
+  dispatch,
+  song,
+})
 // Nhạc giáng sinh
-const ChristmasMusic = () => {
-  const data = [
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-  ]
+const ChristmasMusic = ({ dispatch, song }) => {
+  const [pagination, setPagination] = useState({
+    current: DEFAULT_PAGE,
+    pageSize: DEFAULT_PAGE_SIZE,
+    total: song.totalSongsByGenre,
+  })
+  useEffect(() => {
+    setPagination({ ...pagination, total: song.totalSongsByGenre })
+  }, [song.totalSongsByGenre])
+  useEffect(() => {
+    dispatch({
+      type: 'song/GET_SONGS_BY_GENRE',
+      payload: {
+        ...pagination,
+        genre: MUSIC_GENRE.CHRISTMAS_MUSIC,
+      },
+    })
+  }, [pagination.current])
   return (
     <>
       <SearchForm />
       <div style={{ width: '80%', margin: 'auto' }}>
-        <Card title={<h3 style={{ fontWeight: 'bold' }}>NHẠC XUÂN, GIÁNG SINH KARAOKE</h3>}>
-          <SongList data={data} />
+        <Card
+          loading={song.loading}
+          title={<h3 style={{ fontWeight: 'bold' }}>NHẠC XUÂN, GIÁNG SINH KARAOKE</h3>}
+        >
+          <SongList data={song.songsByGenre} />
         </Card>
         <br />
-        <Pagination style={{ textAlign: 'center' }} defaultCurrent={1} total={50} />;
+        <Pagination
+          {...pagination}
+          style={{ textAlign: 'center' }}
+          onChange={(e) => {
+            setPagination({
+              ...pagination,
+              current: e,
+            })
+          }}
+        />
+        ;
       </div>
     </>
   )
 }
 
-export default ChristmasMusic
+export default connect(mapStateToProps)(ChristmasMusic)
