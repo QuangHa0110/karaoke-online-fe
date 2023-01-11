@@ -1,8 +1,13 @@
 import config from './config'
 
-const UserAPI = {
-  getSongs: (payload) => config.get(`/songs`, payload),
+const SongAPI = {
+  getSongs: (payload) =>
+    config.get(`/songs`, {
+      params: {
+        ...payload,
+      },
+    }),
   getSongById: (id) => config.get(`/song/${id}`),
 }
 
-export default UserAPI
+export default SongAPI
