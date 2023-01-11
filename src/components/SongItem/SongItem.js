@@ -28,8 +28,9 @@ const SongItem = ({ item }) => {
       </div>
 
       <div style={{ marginTop: '10px' }}>
+        Ca sĩ:
         {item.attributes && item.attributes.singer.data
-          ? `Ca sĩ: ${item.attributes.singer.data.attributes.name}`
+          ? ` ${item.attributes.singer.data.attributes.name}`
           : ''}
       </div>
     </Card>
