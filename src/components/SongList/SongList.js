@@ -2,7 +2,7 @@ import { List } from 'antd'
 import SongItem from 'components/SongItem/SongItem'
 import React from 'react'
 
-// Danh sách bài hátats
+// Danh sách bài hát
 const SongList = (props) => {
   const { data } = props
   return (
