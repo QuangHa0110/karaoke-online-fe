@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { Avatar, Card, Col, List, Row } from 'antd'
+import { Avatar, Card, Col, List, Pagination, Row } from 'antd'
 import SongItem from 'components/SongItem/SongItem'
-import React, { useEffect } from 'react'
+import SongList from 'components/SongList/SongList'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'services/ultis/constants'
 import formatUrlImage from 'services/ultis/helper/FormatHepler'
 
 const mapStateToProps = ({ singer, dispatch }) => ({
@@ -15,7 +17,15 @@ const SingerDetailPage = ({ singer, dispatch }) => {
   // get id from path url
   const { id } = useParams()
 
-  const { currentSinger } = singer
+  const { currentSinger, totalSongOfCurrentSinger } = singer
+  const [pagination, setPagination] = useState({
+    current: DEFAULT_PAGE,
+    pageSize: DEFAULT_PAGE_SIZE,
+  })
+
+  useEffect(() => {
+    setPagination({ ...pagination, total: totalSongOfCurrentSinger })
+  }, [totalSongOfCurrentSinger])
 
   useEffect(() => {
     dispatch({
@@ -25,15 +35,7 @@ const SingerDetailPage = ({ singer, dispatch }) => {
       },
     })
   }, [])
- 
-  const songList = [
-    {
-      id: Math.random(),
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/song/co-chac-yeu-la-day.webp`,
-      name: 'Có chắc yêu là đây - Karaoke',
-      singer: 'Sơn Tùng MTP',
-    },
-  ]
+
   return (
     <div style={{ width: '80%', margin: 'auto' }}>
       <Card>
@@ -64,24 +66,28 @@ const SingerDetailPage = ({ singer, dispatch }) => {
           </h3>
         }
       >
-        <List
-          grid={{
-            gutter: 16,
-            xs: 1,
-            sm: 2,
-            md: 4,
-            lg: 4,
-            xl: 6,
-            xxl: 3,
-          }}
-          dataSource={songList}
-          renderItem={(song) => (
-            <List.Item key={Math.random()}>
-              <SongItem item={song} />
-            </List.Item>
-          )}
-        />
+        <SongList data={singer.songsOfCurrentSinger} />
       </Card>
+      <br />
+      <Pagination
+        {...pagination}
+        style={{ textAlign: 'center' }}
+        onChange={(e) => {
+          setPagination({
+            ...pagination,
+            current: e,
+          })
+          dispatch({
+            type: 'singer/GET_SONGS_OF_SINGER',
+            payload: {
+              id,
+              page: e,
+              pageSize: pagination.pageSize,
+            },
+          })
+        }}
+      />
+      ;
     </div>
   )
 }
