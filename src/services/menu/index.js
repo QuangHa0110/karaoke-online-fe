@@ -5,27 +5,27 @@ export default async function getMenuData() {
       key: 'home',
       url: '/public/home',
     },
-    {
-      title: 'Quản trị',
-      key: 'manage',
-      children: [
-        {
-          title: 'Tài khoản',
-          key: 'account',
-          url: '/manage/account'
-        },
-        {
-          title: 'Bài hát',
-          key: 'song',
-          url: '/manage/song'
-        },
-        {
-          title: 'Ca sĩ',
-          key: 'singer',
-          url: '/manage/singer'
-        }
-      ]
-    },
+    // {
+    //   title: 'Quản trị',
+    //   key: 'manage',
+    //   children: [
+    //     {
+    //       title: 'Tài khoản',
+    //       key: 'account',
+    //       url: '/manage/account'
+    //     },
+    //     {
+    //       title: 'Bài hát',
+    //       key: 'song',
+    //       url: '/manage/song'
+    //     },
+    //     {
+    //       title: 'Ca sĩ',
+    //       key: 'singer',
+    //       url: '/manage/singer'
+    //     }
+    //   ]
+    // },
     {
       title: 'Thể loại',
       key: 'category',
