@@ -1,12 +1,11 @@
 import actions from './actions'
 
 const initialState = {
-  songs: [],
-  currentSong: null,
+  latestSongs: [],
   loading: false,
 }
 
-export default function userReducer(state = initialState, action) {
+export default function songReducer(state = initialState, action) {
   switch (action.type) {
     case actions.SET_STATE:
       return { ...state, ...action.payload }
