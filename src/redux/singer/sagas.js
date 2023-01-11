@@ -12,23 +12,30 @@ export function* GET_SINGERS({ payload }) {
   })
 
   const success = yield call(SingerAPI.getSingers, payload)
+  console.log("🚀 ~ file: sagas.js:15 ~ function*GET_SINGERS ~ payload", payload)
+
+  const { pagination } = yield select((state) => state.singer)
 
   if (success) {
-    console.log("🚀 ~ file: sagas.js:17 ~ function*GET_SINGERS ~ success", success.data.data)
     yield put({
       type: 'singer/SET_STATE',
       payload: {
         singerList: success.data.data,
         loading: false,
+        pagination: {
+          ...pagination,
+          current: success.data.meta.pagination.page,
+          total: success.data.meta.pagination.total,
+        },
       },
     })
   }
-  const { singerList } = yield select((state) => state.singer)
-  console.log("🚀 ~ file: sagas.js:26 ~ function*GET_SINGERS ~ singerList", singerList)
 }
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.GET_SINGERS, GET_SINGERS),
+
     // GET_SINGERS({ populate: '*' }),
     // takeEvery(actions.LOGIN, LOGIN),
   ])

@@ -3,7 +3,7 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Input, List, Pagination, Row } from 'antd'
 import SearchForm from 'components/SearchForm/SearchForm'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import qs from 'qs'
 import SingerAPI from 'services/api/singer.api'
@@ -17,47 +17,16 @@ const mapStateToProps = ({ singer, dispatch }) => ({
 })
 // Danh sách ca sĩ
 const SingerListPage = ({ dispatch, singer }) => {
-  
   useEffect(() => {
     dispatch({
       type: 'singer/GET_SINGERS',
       payload: {
         populate: '*',
+        'pagination[page]': singer.pagination.current,
+        'pagination[pageSize]': singer.pagination.pageSize,
       },
     })
-  }, [])
-  const data = [
-    {
-      id: Math.random(),
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/singer/son-tung-mtp.jpg`,
-      name: 'Sơn Tùng MTP',
-    },
-    {
-      id: Math.random(),
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/singer/son-tung-mtp.jpg`,
-      name: 'Sơn Tùng MTP',
-    },
-    {
-      id: Math.random(),
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/singer/son-tung-mtp.jpg`,
-      name: 'Sơn Tùng MTP',
-    },
-    {
-      id: Math.random(),
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/singer/son-tung-mtp.jpg`,
-      name: 'Sơn Tùng MTP',
-    },
-    {
-      id: Math.random(),
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/singer/son-tung-mtp.jpg`,
-      name: 'Sơn Tùng MTP',
-    },
-    {
-      id: Math.random(),
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/singer/son-tung-mtp.jpg`,
-      name: 'Sơn Tùng MTP',
-    },
-  ]
+  }, [singer.pagination.current])
   return (
     <>
       <SearchForm />
@@ -82,7 +51,22 @@ const SingerListPage = ({ dispatch, singer }) => {
           />
         </Card>
         <br />
-        <Pagination style={{ textAlign: 'center' }} defaultCurrent={1} total={50} />;
+        <Pagination
+          {...singer.pagination}
+          style={{ textAlign: 'center' }}
+          onChange={(e) => {
+            dispatch({
+              type: 'singer/SET_STATE',
+              payload: {
+                pagination: {
+                  ...singer.pagination,
+                  current: e,
+                },
+              },
+            })
+          }}
+        />
+        ;
       </div>
     </>
   )
