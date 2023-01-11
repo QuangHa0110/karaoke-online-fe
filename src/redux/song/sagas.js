@@ -111,11 +111,38 @@ export function* GET_SONGS_BY_GENRE({ payload }) {
     })
   }
 }
+export function* GET_SONG_BY_ID({ payload }) {
+  yield put({
+    type: 'song/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const success = yield call(SongAPI.getSongById, payload.id)
+
+  if (success) {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        currentSong: success.data.data,
+        loading: false,
+      },
+    })
+  } else {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        loading: false,
+      },
+    })
+  }
+}
 
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.GET_SONGS, GET_SONGS),
     takeEvery(actions.GET_LATEST_SONGS, GET_LATEST_SONGS),
     takeEvery(actions.GET_SONGS_BY_GENRE, GET_SONGS_BY_GENRE),
+    takeEvery(actions.GET_SONG_BY_ID, GET_SONG_BY_ID),
   ])
 }
