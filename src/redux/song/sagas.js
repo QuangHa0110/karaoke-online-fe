@@ -138,11 +138,95 @@ export function* GET_SONG_BY_ID({ payload }) {
   }
 }
 
+export function* GET_SAME_GENRE_SONGS({ payload }) {
+  yield put({
+    type: 'song/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const body = {
+    populate: '*',
+    'pagination[page]': 1,
+    'pagination[pageSize]': 8,
+    sort: ['updatedAt:desc'],
+    filters: {
+      id: {
+        $ne: payload.id,
+      },
+      genre: {
+        $eq: payload.genre,
+      },
+    },
+  }
+  const success = yield call(SongAPI.getSongs, body)
+  if (success) {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        sameGenreSongs: success.data.data,
+        loading: false,
+      },
+    })
+  } else {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        loading: false,
+      },
+    })
+  }
+}
+
+export function* GET_SAME_SINGER_SONGS({ payload }) {
+  yield put({
+    type: 'song/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const body = {
+    populate: '*',
+    'pagination[page]': 1,
+    'pagination[pageSize]': 8,
+    sort: ['updatedAt:desc'],
+    filters: {
+      id: {
+        $ne: payload.id,
+      },
+      singer: {
+        id: {
+          $eq: payload.singerId,
+        },
+      },
+    },
+  }
+  const success = yield call(SongAPI.getSongs, body)
+  if (success) {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        sameSingerSongs: success.data.data,
+        loading: false,
+      },
+    })
+  } else {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        loading: false,
+      },
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.GET_SONGS, GET_SONGS),
     takeEvery(actions.GET_LATEST_SONGS, GET_LATEST_SONGS),
     takeEvery(actions.GET_SONGS_BY_GENRE, GET_SONGS_BY_GENRE),
     takeEvery(actions.GET_SONG_BY_ID, GET_SONG_BY_ID),
+    takeEvery(actions.GET_SAME_GENRE_SONGS, GET_SAME_GENRE_SONGS),
+    takeEvery(actions.GET_SAME_SINGER_SONGS, GET_SAME_SINGER_SONGS),
   ])
 }
