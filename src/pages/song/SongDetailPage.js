@@ -26,7 +26,7 @@ const mapStateToProps = ({ user, dispatch, song }) => ({
 const SongDetailPage = (props) => {
   // get id from path url
   const { id } = useParams()
-  const { user, authorized, dispatch, song } = props
+  const { authorized, dispatch, song } = props
   useEffect(() => {
     dispatch({
       type: 'song/GET_SONG_BY_ID',
@@ -35,28 +35,27 @@ const SongDetailPage = (props) => {
       },
     })
   }, [])
-  const data = [
-    {
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/sliders/danh-mat-em.jpg`,
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/sliders/danh-mat-em.jpg`,
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/sliders/danh-mat-em.jpg`,
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: `${process.env.PUBLIC_URL}/resources/images/sliders/danh-mat-em.jpg`,
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-  ]
+
+  useEffect(() => {
+    if (song && song.currentSong && song.currentSong.attributes) {
+      dispatch({
+        type: 'song/GET_SAME_GENRE_SONGS',
+        payload: {
+          id,
+          genre: song.currentSong.attributes.genre,
+        },
+      })
+      if (song.currentSong.attributes.singer.data) {
+        dispatch({
+          type: 'song/GET_SAME_SINGER_SONGS',
+          payload: {
+            id,
+            singerId: song.currentSong.attributes.singer.data.id,
+          },
+        })
+      }
+    }
+  }, [song.currentSong])
   const handleAddYourFavoriteSong = () => {
     if (authorized) {
       notification.success({
@@ -79,7 +78,7 @@ const SongDetailPage = (props) => {
         </Row>
         <br />
         <Row gutter={[30, 30]}>
-          <Col span={16} style={{cursor: 'pointer'}}>
+          <Col span={16} style={{ cursor: 'pointer' }}>
             <ReactPlayer
               width="100%"
               height={500}
@@ -119,11 +118,11 @@ const SongDetailPage = (props) => {
       </Card>
       <br />
       <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT CÙNG THỂ LOẠI</h3>}>
-        <SongList data={data} />
+        <SongList data={song.sameGenreSongs} />
       </Card>
       <br />
       <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT CÙNG CA SĨ</h3>}>
-        <SongList data={data} />
+        <SongList data={song.sameSingerSongs} />
       </Card>
     </div>
   )
