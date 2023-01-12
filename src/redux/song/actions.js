@@ -4,6 +4,8 @@ const actions = {
   GET_LATEST_SONGS: 'song/GET_LATEST_SONGS',
   GET_SONG_BY_ID: 'song/GET_SONG_BY_ID',
   GET_SONGS_BY_GENRE: 'song/GET_SONGS_BY_GENRE',
+  GET_SAME_GENRE_SONGS: 'song/GET_SAME_GENRE_SONGS',
+  GET_SAME_SINGER_SONGS: 'song/GET_SAME_SINGER_SONGS',
 }
 
 export default actions

@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: '/public/song/:id',
-    Component: lazy(() => import('pages/song')),
+    Component: lazy(() => import('pages/song/SongDetailPage')),
     exact: true,
   },
  

@@ -59,6 +59,7 @@ const SingerDetailPage = ({ singer, dispatch }) => {
       </Card>
       <br />
       <Card
+        loading={singer.loading}
         title={
           <h3 style={{ fontWeight: 'bold' }}>
             BÀI HÁT KARAOKE -{' '}

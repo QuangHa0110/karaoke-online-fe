@@ -33,6 +33,7 @@ const SingerListPage = ({ dispatch, singer }) => {
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card title={<h3 style={{ fontWeight: 'bold' }}>DANH SÁCH CA SĨ</h3>}>
           <List
+            loading={singer.loading}
             grid={{
               gutter: 16,
               xs: 1,

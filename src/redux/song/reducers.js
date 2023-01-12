@@ -4,6 +4,9 @@ const initialState = {
   latestSongs: [],
   totalSongsByGenre: 0,
   songsByGenre: [],
+  currentSong: null,
+  sameGenreSongs: [],
+  sameSingerSongs: [],
   loading: false,
 }
 
