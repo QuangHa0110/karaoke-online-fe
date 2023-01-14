@@ -26,10 +26,12 @@ const SearchForm = () => {
               setKeyword(e.target.value)
             }}
             onPressEnter={() => {
-              history.push({
-                pathname: '/public/search',
-                search: `keyword=${keyword}`,
-              })
+              if (keyword) {
+                history.push({
+                  pathname: '/public/search',
+                  search: `keyword=${keyword}`,
+                })
+              }
             }}
           />
         </Col>
@@ -39,10 +41,12 @@ const SearchForm = () => {
             size="large"
             style={{ borderRadius: '10px' }}
             onClick={() => {
-              history.push({
-                pathname: '/public/search',
-                search: `keyword=${keyword}`,
-              })
+              if (keyword) {
+                history.push({
+                  pathname: '/public/search',
+                  search: `keyword=${keyword}`,
+                })
+              }
             }}
           >
             Tìm kiếm

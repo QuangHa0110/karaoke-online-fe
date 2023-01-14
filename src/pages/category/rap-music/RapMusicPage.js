@@ -40,18 +40,21 @@ const RapMusic = ({ dispatch, song }) => {
         >
           <SongList data={song.songsByGenre} />
         </Card>
-        <br />
-        <Pagination
-          {...pagination}
-          style={{ textAlign: 'center' }}
-          onChange={(e) => {
-            setPagination({
-              ...pagination,
-              current: e,
-            })
-          }}
-        />
-        ;
+        {pagination.total > 0 ? (
+          <>
+            <br />
+            <Pagination
+              {...pagination}
+              style={{ textAlign: 'center' }}
+              onChange={(e) => {
+                setPagination({
+                  ...pagination,
+                  current: e,
+                })
+              }}
+            />
+          </>
+        ) : null}
       </div>
     </>
   )
