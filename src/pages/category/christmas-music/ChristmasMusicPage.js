@@ -4,6 +4,7 @@ import { Card, Pagination } from 'antd'
 import SearchForm from 'components/SearchForm/SearchForm'
 import SongList from 'components/SongList/SongList'
 import React, { useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MUSIC_GENRE } from 'services/ultis/constants'
 
@@ -32,6 +33,7 @@ const ChristmasMusic = ({ dispatch, song }) => {
   }, [pagination.current])
   return (
     <>
+      <Helmet title="Nhạc xuân, giáng sinh karaoke" />
       <SearchForm />
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card

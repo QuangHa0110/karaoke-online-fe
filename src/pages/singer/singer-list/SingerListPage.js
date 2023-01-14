@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { SearchOutlined } from '@ant-design/icons'
 import { Button, Card, Col, Input, List, Pagination, Row } from 'antd'
 import SearchForm from 'components/SearchForm/SearchForm'
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import qs from 'qs'
-import SingerAPI from 'services/api/singer.api'
-import apiClient from 'services/axios'
-import config from 'services/api/config'
+import { Helmet } from 'react-helmet'
 import SingerItem from './components/SingerItem'
 
 const mapStateToProps = ({ singer, dispatch }) => ({
@@ -29,6 +25,7 @@ const SingerListPage = ({ dispatch, singer }) => {
   }, [singer.pagination.current])
   return (
     <>
+      <Helmet title="Danh sách ca sĩ" />
       <SearchForm />
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card title={<h3 style={{ fontWeight: 'bold' }}>DANH SÁCH CA SĨ</h3>}>
