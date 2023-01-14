@@ -92,7 +92,7 @@ const routes = [
     exact: true,
   },
   {
-    path: '/change-passwords',
+    path: '/change-password',
     Component: lazy(() => import('pages/change-password')),
     exact: true,
   },
