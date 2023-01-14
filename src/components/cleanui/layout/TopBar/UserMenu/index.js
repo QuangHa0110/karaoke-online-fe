@@ -45,37 +45,37 @@ const ProfileMenu = ({ dispatch, user }) => {
     {
       key: Math.random(),
       label: (
-        <a href="#" onClick={(e) => e.preventDefault()}>
+        <Link to="/personal-information">
           <i className="fe fe-user mr-2" />
           <FormattedMessage id="topBar.profileMenu.editProfile" />
-        </a>
+        </Link>
       ),
     },
     {
       key: Math.random(),
       label: (
-        <a href="#" onClick={(e) => e.preventDefault()}>
+        <Link to="/my-music">
           <i className="fe fe-music mr-2" />
           <FormattedMessage id="topBar.profileMenu.myMusic" />
-        </a>
+        </Link>
       ),
     },
     {
       key: Math.random(),
       label: (
-        <a href="#" onClick={(e) => e.preventDefault()}>
+        <Link to="/song-history">
           <i className="fe fe-mic mr-2" />
           <FormattedMessage id="topBar.profileMenu.history" />
-        </a>
+        </Link>
       ),
     },
     {
       key: Math.random(),
       label: (
-        <a href="#" onClick={(e) => e.preventDefault()}>
+        <Link to="/change-password">
           <i className="fe fe-lock mr-2" />
           <FormattedMessage id="topBar.profileMenu.changePassword" />
-        </a>
+        </Link>
       ),
     },
     {
