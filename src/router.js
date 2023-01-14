@@ -18,7 +18,6 @@ const routes = [
     Component: lazy(() => import('pages/song/SongDetailPage')),
     exact: true,
   },
- 
 
   // Nhạc trẻ karaoke
   {
@@ -92,6 +91,26 @@ const routes = [
     Component: lazy(() => import('pages/search-result/SearchResultPage')),
     exact: true,
   },
+  {
+    path: '/change-passwords',
+    Component: lazy(() => import('pages/change-password')),
+    exact: true,
+  },
+  {
+    path: '/my-music',
+    Component: lazy(() => import('pages/my-music')),
+    exact: true,
+  },
+  {
+    path: '/personal-information',
+    Component: lazy(() => import('pages/personal-information')),
+    exact: true,
+  },
+  {
+    path: '/song-history',
+    Component: lazy(() => import('pages/song-history')),
+    exact: true,
+  },
 
   // Auth Pages
   {
@@ -109,7 +128,7 @@ const routes = [
     Component: lazy(() => import('pages/auth/reset-password/ResetPassword')),
     exact: true,
   },
-  
+
   {
     path: '/auth/register',
     Component: lazy(() => import('pages/auth/register')),
