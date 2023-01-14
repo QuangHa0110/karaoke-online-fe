@@ -15,6 +15,7 @@ import { CHANGE_SETTING } from 'redux/settings/sagas'
 import SongList from 'components/SongList/SongList'
 import formatUrlImage from 'services/ultis/helper/FormatHepler'
 import { MUSIC_GENRE_LABEL } from 'services/ultis/constants'
+import { Helmet } from 'react-helmet'
 
 const mapStateToProps = ({ user, dispatch, song }) => ({
   dispatch,
@@ -74,6 +75,7 @@ const SongDetailPage = (props) => {
   }
   return (
     <div style={{ width: '80%', margin: 'auto' }}>
+      <Helmet title={song.currentSong ? song.currentSong.attributes.name : ''} />
       <Card>
         <Row>
           <h3 style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>

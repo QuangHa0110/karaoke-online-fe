@@ -9,6 +9,7 @@ import ReactPlayer from 'react-player'
 import Slider from 'react-slick'
 import SongList from 'components/SongList/SongList'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 const mapStateToProps = ({ song, dispatch, slide }) => ({
   dispatch,
@@ -40,6 +41,7 @@ const Home = ({ song, dispatch, slide }) => {
 
   return (
     <div>
+      <Helmet title="Trang chủ" />
       <SearchForm />
       <div style={{ width: '80%', margin: 'auto' }}>
         <Slider {...settings}>
