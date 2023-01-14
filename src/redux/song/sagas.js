@@ -5,41 +5,6 @@ import SongAPI from 'services/api/song.api'
 import { MUSIC_GENRE } from 'services/ultis/constants'
 import actions from './actions'
 
-export function* GET_SONGS({ payload }) {
-  yield put({
-    type: 'song/SET_STATE',
-    payload: {
-      loading: true,
-    },
-  })
-
-  const success = yield call(SingerAPI.getSingers, payload)
-
-  const { pagination } = yield select((state) => state.singer)
-
-  if (success) {
-    yield put({
-      type: 'song/SET_STATE',
-      payload: {
-        singerList: success.data.data,
-        loading: false,
-        pagination: {
-          ...pagination,
-          current: success.data.meta.pagination.page,
-          total: success.data.meta.pagination.total,
-        },
-      },
-    })
-  } else {
-    yield put({
-      type: 'song/SET_STATE',
-      payload: {
-        loading: false,
-      },
-    })
-  }
-}
-
 export function* GET_LATEST_SONGS() {
   yield put({
     type: 'song/SET_STATE',
@@ -222,7 +187,6 @@ export function* GET_SAME_SINGER_SONGS({ payload }) {
 
 export default function* rootSaga() {
   yield all([
-    takeEvery(actions.GET_SONGS, GET_SONGS),
     takeEvery(actions.GET_LATEST_SONGS, GET_LATEST_SONGS),
     takeEvery(actions.GET_SONGS_BY_GENRE, GET_SONGS_BY_GENRE),
     takeEvery(actions.GET_SONG_BY_ID, GET_SONG_BY_ID),
