@@ -1,11 +1,11 @@
-import { List } from 'antd'
+import { Empty, List } from 'antd'
 import SongItem from 'components/SongItem/SongItem'
 import React from 'react'
 
 // Danh sách bài hát
 const SongList = (props) => {
   const { data } = props
-  return (
+  return data.length > 0 ? (
     <List
       grid={{
         gutter: 16,
@@ -23,6 +23,8 @@ const SongList = (props) => {
         </List.Item>
       )}
     />
+  ) : (
+    <Empty description="Không có dữ liệu" />
   )
 }
 

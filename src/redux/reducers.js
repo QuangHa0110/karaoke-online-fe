@@ -5,6 +5,7 @@ import menu from './menu/reducers'
 import settings from './settings/reducers'
 import singer from './singer/reducers'
 import song from './song/reducers'
+import search from './search-result/reducers'
 
 export default (history) =>
   combineReducers({
@@ -14,4 +15,5 @@ export default (history) =>
     settings,
     singer,
     song,
+    search
   })
