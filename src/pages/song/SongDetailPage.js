@@ -53,6 +53,13 @@ const SongDetailPage = (props) => {
             singerId: song.currentSong.attributes.singer.data.id,
           },
         })
+      } else {
+        dispatch({
+          type: 'song/SET_STATE',
+          payload: {
+            sameSingerSongs: [],
+          },
+        })
       }
     }
   }, [song.currentSong])
