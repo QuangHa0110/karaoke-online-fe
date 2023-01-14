@@ -135,7 +135,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
   const response = yield call(mapAuthProviders[authProvider].currentAccount)
 
   if (response) {
-    const { id, email, name, avatar, role } = response
+    const { id, email, name, avatar, role, username } = response
     yield put({
       type: 'user/SET_STATE',
       payload: {
@@ -143,6 +143,7 @@ export function* LOAD_CURRENT_ACCOUNT() {
         name,
         email,
         avatar,
+        username,
         role: role.name,
         authorized: true,
       },
