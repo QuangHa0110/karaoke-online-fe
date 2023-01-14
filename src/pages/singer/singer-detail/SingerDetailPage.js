@@ -21,6 +21,7 @@ const SingerDetailPage = ({ singer, dispatch }) => {
   const [pagination, setPagination] = useState({
     current: DEFAULT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
+    total: totalSongOfCurrentSinger,
   })
 
   useEffect(() => {
@@ -69,26 +70,30 @@ const SingerDetailPage = ({ singer, dispatch }) => {
       >
         <SongList data={singer.songsOfCurrentSinger} />
       </Card>
-      <br />
-      <Pagination
-        {...pagination}
-        style={{ textAlign: 'center' }}
-        onChange={(e) => {
-          setPagination({
-            ...pagination,
-            current: e,
-          })
-          dispatch({
-            type: 'singer/GET_SONGS_OF_SINGER',
-            payload: {
-              id,
-              page: e,
-              pageSize: pagination.pageSize,
-            },
-          })
-        }}
-      />
-      ;
+      {pagination.total > 0 ? (
+        <>
+          {' '}
+          <br />
+          <Pagination
+            {...pagination}
+            style={{ textAlign: 'center' }}
+            onChange={(e) => {
+              setPagination({
+                ...pagination,
+                current: e,
+              })
+              dispatch({
+                type: 'singer/GET_SONGS_OF_SINGER',
+                payload: {
+                  id,
+                  page: e,
+                  pageSize: pagination.pageSize,
+                },
+              })
+            }}
+          />
+        </>
+      ) : null}
     </div>
   )
 }
