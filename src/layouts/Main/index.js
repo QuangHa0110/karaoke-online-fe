@@ -9,6 +9,7 @@ import Breadcrumbs from 'components/cleanui/layout/Breadcrumbs'
 import Menu from 'components/cleanui/layout/Menu'
 import Footer from 'components/cleanui/layout/Footer'
 import Sidebar from 'components/cleanui/layout/Sidebar'
+import SearchForm from 'components/SearchForm/SearchForm'
 
 const mapStateToProps = ({ settings }) => ({
   isContentMaxWidth: settings.isContentMaxWidth,
@@ -19,6 +20,7 @@ const mapStateToProps = ({ settings }) => ({
   isBorderless: settings.isBorderless,
   isTopbarFixed: settings.isTopbarFixed,
   isGrayTopbar: settings.isGrayTopbar,
+  isMobileView: settings.isMobileView,
 })
 
 const MainLayout = ({
@@ -31,6 +33,7 @@ const MainLayout = ({
   isBorderless,
   isTopbarFixed,
   isGrayTopbar,
+  isMobileView,
 }) => {
   return (
     <div className={classNames({ cui__layout__grayBackground: isGrayBackground })}>
@@ -47,14 +50,18 @@ const MainLayout = ({
         <Sidebar />
         <Menu />
         <Layout>
-          {/* <Layout.Header
-            className={classNames('cui__layout__header', {
-              cui__layout__fixedHeader: isTopbarFixed,
-              cui__layout__headerGray: isGrayTopbar,
-            })}
-          >
-            <TopBar />
-          </Layout.Header> */}
+          {isMobileView ? (
+            <Layout.Header
+              className={classNames('cui__layout__header', {
+                cui__layout__fixedHeader: isTopbarFixed,
+                cui__layout__headerGray: isGrayTopbar,
+              })}
+              style={{ justifyContent: 'end' }}
+            >
+              <TopBar />
+            </Layout.Header>
+          ) : null}
+
           <Breadcrumbs />
           <Layout.Content style={{ height: '100%', position: 'relative' }}>
             <div className="cui__utils__content">{children}</div>

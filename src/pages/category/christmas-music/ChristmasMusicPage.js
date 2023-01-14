@@ -34,7 +34,7 @@ const ChristmasMusic = ({ dispatch, song }) => {
   return (
     <>
       <Helmet title="Nhạc xuân, giáng sinh karaoke" />
-      <SearchForm />
+      {/* <SearchForm /> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card
           loading={song.loading}

@@ -34,7 +34,7 @@ const ChildrenMusic = ({ dispatch, song }) => {
   return (
     <>
       <Helmet title="Nhạc thiếu nhi karaoke" />
-      <SearchForm />
+      {/* <SearchForm /> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card
           loading={song.loading}

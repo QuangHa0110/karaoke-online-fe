@@ -75,7 +75,7 @@ const SearchResultPage = (props) => {
   return (
     <div>
       <Helmet title="Kết quả tìm kiếm" />
-      <SearchForm />
+      {/* <SearchForm /> */}
 
       <div style={{ width: '80%', margin: 'auto' }}>
         <h4>Từ khóa tìm kiếm "{keyword}"</h4>

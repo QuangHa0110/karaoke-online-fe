@@ -34,7 +34,7 @@ const YoungMusic = ({ dispatch, song }) => {
   return (
     <>
       <Helmet title="Nhạc trẻ karaoke" />
-      <SearchForm />
+      {/* <SearchForm /> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card
           loading={song.loading}

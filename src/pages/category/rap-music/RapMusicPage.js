@@ -34,7 +34,7 @@ const RapMusic = ({ dispatch, song }) => {
   return (
     <>
       <Helmet title="Nhạc rap karaoke" />
-      <SearchForm />
+      {/* <SearchForm /> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card
           loading={song.loading}

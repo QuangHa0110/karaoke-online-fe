@@ -26,7 +26,7 @@ const SingerListPage = ({ dispatch, singer }) => {
   return (
     <>
       <Helmet title="Danh sách ca sĩ" />
-      <SearchForm />
+      {/* <SearchForm /> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Card title={<h3 style={{ fontWeight: 'bold' }}>DANH SÁCH CA SĨ</h3>}>
           <List

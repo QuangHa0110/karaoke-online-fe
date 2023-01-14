@@ -4,6 +4,7 @@ import { Button } from 'antd'
 import { useNavigate, withRouter } from 'react-router-dom'
 import { history } from 'index'
 import { connect } from 'react-redux'
+import SearchForm from 'components/SearchForm/SearchForm'
 import UserMenu from './UserMenu'
 import style from './style.module.scss'
 
