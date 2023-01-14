@@ -10,44 +10,13 @@ import Slider from 'react-slick'
 import SongList from 'components/SongList/SongList'
 import { connect } from 'react-redux'
 
-const mapStateToProps = ({ song, dispatch }) => ({
+const mapStateToProps = ({ song, dispatch, slide }) => ({
   dispatch,
   song,
+  slide,
 })
 
-const Home = ({ song, dispatch }) => {
-  const data = [
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-  ]
+const Home = ({ song, dispatch, slide }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -61,6 +30,12 @@ const Home = ({ song, dispatch }) => {
     dispatch({
       type: 'song/GET_LATEST_SONGS',
     })
+    dispatch({
+      type: 'slide/GET_SLIDES',
+      payload: {
+        populate: '*',
+      },
+    })
   }, [])
 
   return (
@@ -68,18 +43,13 @@ const Home = ({ song, dispatch }) => {
       <SearchForm />
       <div style={{ width: '80%', margin: 'auto' }}>
         <Slider {...settings}>
-          <div>
-            <img src="../resources/images/sliders/da-lo-yeu-em-nhieu.jpg" alt="" />
-          </div>
-          <div>
-            <img src="../resources/images/sliders/danh-mat-em.jpg" alt="" />
-          </div>
-          <div>
-            <img src="../resources/images/sliders/dau-nhat-la-lang-im.jpg" alt="" />
-          </div>
-          <div>
-            <img src="../resources/images/sliders/beauty-and-a-beat.jpg" alt="" />
-          </div>
+          {slide.slides.map((element) => {
+            return (
+              <div key={element.id}>
+                <img src={element.attributes.image.data.attributes.url} alt="" />
+              </div>
+            )
+          })}
         </Slider>
         <br />
         <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT MỚI NHẤT</h3>}>

@@ -13,6 +13,9 @@ const messages = {
   'topBar.profileMenu.email': 'Email',
   'topBar.profileMenu.phone': 'SĐT',
   'topBar.profileMenu.editProfile': 'Thông tin cá nhân',
+  'topBar.profileMenu.myMusic': 'Nhạc của tui',
+  'topBar.profileMenu.history': 'Lịch sử bài hát',
+  'topBar.profileMenu.changePassword': 'Đổi mật khẩu',
   'topBar.profileMenu.logout': 'Đăng xuất',
 }
 

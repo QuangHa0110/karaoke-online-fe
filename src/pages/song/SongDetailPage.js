@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-find-dom-node */
 /* eslint-disable no-unused-vars */
-import { LikeOutlined } from '@ant-design/icons'
+import { LikeOutlined, PlayCircleOutlined } from '@ant-design/icons'
 import { Button, Card, Col, List, notification, Row } from 'antd'
 import SongItem from 'components/SongItem/SongItem'
 import React, { useEffect } from 'react'
@@ -53,6 +53,13 @@ const SongDetailPage = (props) => {
             singerId: song.currentSong.attributes.singer.data.id,
           },
         })
+      } else {
+        dispatch({
+          type: 'song/SET_STATE',
+          payload: {
+            sameSingerSongs: [],
+          },
+        })
       }
     }
   }, [song.currentSong])
@@ -82,6 +89,7 @@ const SongDetailPage = (props) => {
             <ReactPlayer
               width="100%"
               height={500}
+              playing
               url={
                 song.currentSong
                   ? formatUrlImage(song.currentSong.attributes.media.data.attributes.url)
