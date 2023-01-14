@@ -16,38 +16,6 @@ const mapStateToProps = ({ song, dispatch }) => ({
 })
 
 const Home = ({ song, dispatch }) => {
-  const data = [
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-    {
-      imgLink: '../resources/images/sliders/danh-mat-em.jpg',
-      name: 'Đánh mất em - Karaoke',
-      singer: 'Quang Đăng Trần',
-    },
-  ]
   const settings = {
     dots: false,
     infinite: true,
