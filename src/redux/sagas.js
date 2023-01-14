@@ -4,7 +4,8 @@ import menu from './menu/sagas'
 import settings from './settings/sagas'
 import singer from './singer/sagas'
 import song from './song/sagas'
+import search from './search-result/sagas'
 
 export default function* rootSaga() {
-  yield all([user(), menu(), settings(), singer(), song()])
+  yield all([user(), menu(), settings(), singer(), song(), search()])
 }
