@@ -22,14 +22,8 @@ const ProfileMenu = ({ dispatch, user }) => {
       label: (
         <>
           <strong>
-            <FormattedMessage id="topBar.profileMenu.hello" />, {user.name || 'Anonymous'}
+            <FormattedMessage id="topBar.profileMenu.hello" />, {user.username || 'Anonymous'}
           </strong>
-          <div>
-            <strong>
-              <FormattedMessage id="topBar.profileMenu.role" />:{' '}
-            </strong>
-            {user.role || '—'}
-          </div>
           <Menu.Divider />
         </>
       ),
@@ -54,6 +48,33 @@ const ProfileMenu = ({ dispatch, user }) => {
         <a href="#" onClick={(e) => e.preventDefault()}>
           <i className="fe fe-user mr-2" />
           <FormattedMessage id="topBar.profileMenu.editProfile" />
+        </a>
+      ),
+    },
+    {
+      key: Math.random(),
+      label: (
+        <a href="#" onClick={(e) => e.preventDefault()}>
+          <i className="fe fe-music mr-2" />
+          <FormattedMessage id="topBar.profileMenu.myMusic" />
+        </a>
+      ),
+    },
+    {
+      key: Math.random(),
+      label: (
+        <a href="#" onClick={(e) => e.preventDefault()}>
+          <i className="fe fe-mic mr-2" />
+          <FormattedMessage id="topBar.profileMenu.history" />
+        </a>
+      ),
+    },
+    {
+      key: Math.random(),
+      label: (
+        <a href="#" onClick={(e) => e.preventDefault()}>
+          <i className="fe fe-lock mr-2" />
+          <FormattedMessage id="topBar.profileMenu.changePassword" />
         </a>
       ),
     },
