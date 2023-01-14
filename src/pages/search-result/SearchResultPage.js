@@ -11,6 +11,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'services/ultis/constants'
 import SongList from 'components/SongList/SongList'
+import { Helmet } from 'react-helmet'
 
 const mapStateToProps = ({ search, dispatch }) => ({
   dispatch,
@@ -73,6 +74,7 @@ const SearchResultPage = (props) => {
   }, [searchParams.get('keyword'), paginationSinger.current])
   return (
     <div>
+      <Helmet title="Kết quả tìm kiếm" />
       <SearchForm />
 
       <div style={{ width: '80%', margin: 'auto' }}>
