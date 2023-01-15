@@ -25,6 +25,22 @@ const Home = ({ song, dispatch, slide }) => {
     autoplay: true,
     slidesToShow: 3,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          arrows: false,
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          slidesToShow: 1,
+        },
+      },
+    ],
   }
 
   useEffect(() => {
@@ -42,13 +58,17 @@ const Home = ({ song, dispatch, slide }) => {
   return (
     <div>
       <Helmet title="Trang chủ" />
-      <SearchForm />
+      {/* <SearchForm /> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Slider {...settings}>
           {slide.slides.map((element) => {
             return (
               <div key={element.id}>
-                <img src={element.attributes.image.data.attributes.url} alt="" />
+                <img
+                  src={element.attributes.image.data.attributes.url}
+                  style={{ margin: 'auto' }}
+                  alt=""
+                />
               </div>
             )
           })}

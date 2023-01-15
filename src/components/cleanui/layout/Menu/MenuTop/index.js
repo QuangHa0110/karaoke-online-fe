@@ -6,6 +6,7 @@ import { Link, withRouter } from 'react-router-dom'
 import classNames from 'classnames'
 import store from 'store'
 import { find } from 'lodash'
+import SearchForm from 'components/SearchForm/SearchForm'
 import style from './style.module.scss'
 import TopBar from '../../TopBar'
 
@@ -147,6 +148,8 @@ const MenuTop = ({
           {generateMenuItems()}
         </Menu>
       </div>
+      <SearchForm />
+
       <TopBar />
     </div>
   )

@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react'
 import { Drawer } from 'antd'
 import { connect } from 'react-redux'
 import MenuLeft from './MenuLeft'
 import MenuTop from './MenuTop'
 import style from './style.module.scss'
+import TopBar from '../TopBar'
 
 const mapStateToProps = ({ settings }) => ({
   menuLayoutType: settings.menuLayoutType,
@@ -18,12 +20,12 @@ let touchStartLocked = false
 const Menu = ({ dispatch, isMobileMenuOpen, isMobileView, menuLayoutType, leftMenuWidth }) => {
   useEffect(() => {
     // mobile menu touch slide opener
-    const unify = e => {
+    const unify = (e) => {
       return e.changedTouches ? e.changedTouches[0] : e
     }
     document.addEventListener(
       'touchstart',
-      e => {
+      (e) => {
         const x = unify(e).clientX
         touchStartPrev = x
         touchStartLocked = x > 70
@@ -32,7 +34,7 @@ const Menu = ({ dispatch, isMobileMenuOpen, isMobileView, menuLayoutType, leftMe
     )
     document.addEventListener(
       'touchmove',
-      e => {
+      (e) => {
         const x = unify(e).clientX
         const prev = touchStartPrev
         if (x - prev > 50 && !touchStartLocked) {
@@ -62,7 +64,7 @@ const Menu = ({ dispatch, isMobileMenuOpen, isMobileView, menuLayoutType, leftMe
           <div
             className={style.handler}
             onClick={toggleMobileMenu}
-            onFocus={e => {
+            onFocus={(e) => {
               e.preventDefault()
             }}
             onKeyPress={toggleMobileMenu}

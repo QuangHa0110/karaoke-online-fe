@@ -27,12 +27,21 @@ const mapStateToProps = ({ user, dispatch, song }) => ({
 const SongDetailPage = (props) => {
   // get id from path url
   const { id } = useParams()
-  const { authorized, dispatch, song } = props
+  const { authorized, dispatch, song, user } = props
   useEffect(() => {
     dispatch({
       type: 'song/GET_SONG_BY_ID',
       payload: {
         id,
+      },
+    })
+    dispatch({
+      type: 'song-history/CREATE_SONG_HISTORY',
+      payload: {
+        data: {
+          song: id,
+          user: user.id,
+        },
       },
     })
   }, [])

@@ -7,6 +7,7 @@ import singer from './singer/reducers'
 import song from './song/reducers'
 import search from './search-result/reducers'
 import slide from './slide/reducers'
+import songHistory from './song-history/reducers'
 
 export default (history) =>
   combineReducers({
@@ -18,4 +19,5 @@ export default (history) =>
     song,
     search,
     slide,
+    songHistory,
   })
