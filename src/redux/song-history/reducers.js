@@ -2,6 +2,9 @@ import actions from './actions'
 
 const initialState = {
   songHistories: [],
+  totalSongHistories: 0,
+  totalPages: 0,
+  loading: false,
 }
 
 export default function songHistoryReducer(state = initialState, action) {

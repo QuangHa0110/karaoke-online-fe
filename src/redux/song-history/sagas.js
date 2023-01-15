@@ -15,20 +15,18 @@ export function* GET_SONG_HISTORIES({ payload }) {
   })
 
   const body = {
-    sort: ['createdAt: desc'],
+    ...payload,
+    sort: ['createdAt:desc'],
   }
-  //   const payload = {
-  //     sort: ['updatedAt:desc'],
-  //     'pagination[page]': 1,
-  //     'pagination[pageSize]': 8,
-  //     populate: '*',
-  //   }
   const success = yield call(SongHistoryAPI.getSongHistories, body)
+  const { songHistories } = yield select((state) => state.songHistory)
   if (success) {
     yield put({
       type: 'song-history/SET_STATE',
       payload: {
-        latestSongs: success.data.data,
+        songHistories: [...songHistories, ...success.data.data],
+        totalSongHistories: success.data.meta.pagination.total,
+        totalPages: success.data.meta.pagination.pageCount,
         loading: false,
       },
     })
@@ -45,10 +43,21 @@ export function* GET_SONG_HISTORIES({ payload }) {
 export function* CREATE_SONG_HISTORY({ payload }) {
   yield call(SongHistoryAPI.createSongHistory, payload)
 }
+export function* DELETE_SONG_HISTORY({ payload }) {
+  yield call(SongHistoryAPI.deleteSongHistory, payload.id)
+  const { songHistories } = yield select((state) => state.songHistory)
+  yield put({
+    type: 'song-history/SET_STATE',
+    payload: {
+      songHistories: songHistories.filter((songHistory) => songHistory.id !== payload.id),
+    },
+  })
+}
 
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.GET_SONG_HISTORIES, GET_SONG_HISTORIES),
     takeEvery(actions.CREATE_SONG_HISTORY, CREATE_SONG_HISTORY),
-])
+    takeEvery(actions.DELETE_SONG_HISTORY, DELETE_SONG_HISTORY),
+  ])
 }
