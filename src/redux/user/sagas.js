@@ -3,6 +3,7 @@ import { all, takeEvery, put, call, select } from 'redux-saga/effects'
 import { notification } from 'antd'
 import { history } from 'index'
 import * as jwt from 'services/jwt'
+import AuthAPI from 'services/api/auth.api'
 import actions from './actions'
 
 const mapAuthProviders = {
@@ -29,6 +30,34 @@ export function* FORGOT_PASSWORD({ payload }) {
     notification.success({
       message:
         'Hệ thống đã gửi email xác nhận lấy lại mật khẩu đến email của bạn. Vui lòng kiểm tra email nhận được',
+    })
+  }
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: false,
+    },
+  })
+}
+export function* CHANGE_PASSWORD({ payload }) {
+  console.log("🚀 ~ file: sagas.js:43 ~ function*CHANGE_PASSWORD ~ payload", payload)
+  yield put({
+    type: 'user/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+  const success = yield call(AuthAPI.changePassword, payload)
+  if (success) {
+    notification.success({
+      message: 'Đổi mật khẩu thành công',
+    })
+    yield put({
+      type: 'user/LOGOUT',
+    })
+  }else{
+    notification.error({
+      message: 'Đổi mật khẩu không thành công',
     })
   }
   yield put({
@@ -183,6 +212,7 @@ export default function* rootSaga() {
     takeEvery(actions.LOGOUT, LOGOUT),
     takeEvery(actions.FORGOT_PASSWORD, FORGOT_PASSWORD),
     takeEvery(actions.RESET_PASSWORD, RESET_PASSWORD),
+    takeEvery(actions.CHANGE_PASSWORD, CHANGE_PASSWORD),
     LOAD_CURRENT_ACCOUNT(), // run once on app load to check user auth
   ])
 }

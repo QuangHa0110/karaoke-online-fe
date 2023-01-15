@@ -27,48 +27,24 @@ apiClient.interceptors.response.use(undefined, (error) => {
   const { response } = error
   const { data } = response
   if (data) {
-    let messageError
-    if (data.fieldErrors !== undefined) {
-      messageError = data.fieldErrors[0].message
-    } else {
-      messageError = data.title
-    }
-    if (data.status === 403) {
+    if (data.error.status === 403) {
       notification.error({
         message: 'Lỗi',
         description: 'Bạn không đủ quyền thực hiện',
       })
 
-      // window.location.href = '/auth/403'
       logout()
-    } else if (data.detail === '404 NOT_FOUND' && data.status === 400) {
+    } else if (data.error.status >= 500) {
+      notification.error({
+        message: 'Hệ thống đang bận, vui lòng thử lại sau',
+      })
+      logout()
+    } else if (data.error.status === 401) {
       notification.error({
         message: 'Lỗi',
         description: 'Đã có lỗi xảy ra, hãy đăng nhập lại',
       })
       logout()
-    } else if (data.detail === '404 NOT_FOUND' && data.status === 404) {
-      notification.error({
-        message: 'Lỗi',
-        description: 'Đã có lỗi xảy ra, hãy đăng nhập lại',
-      })
-      logout()
-    } else if (data.status === 401 && data.title === 'Unauthorized') {
-      notification.error({
-        message: 'Lỗi',
-        description: 'Đã có lỗi xảy ra, hãy đăng nhập lại',
-      })
-      logout()
-    } else if (data.status >= 400 && data.status <= 405) {
-      notification.error({
-        message: 'Lỗi',
-        description: messageError,
-      })
-    } else if (data.status !== 200 && data.status !== 201 && data.status !== 204) {
-      notification.error({
-        message: 'Lỗi',
-        description: 'Đã có lỗi xảy ra',
-      })
     }
   }
 })
