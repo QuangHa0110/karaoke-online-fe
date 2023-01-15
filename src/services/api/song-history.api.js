@@ -9,6 +9,7 @@ const SongHistoryAPI = {
     })
   },
   createSongHistory: (payload) => config.post(`/song-histories`, payload),
+  deleteSongHistory: (id) => config.delete(`/song-histories/${id}`),
 }
 
 export default SongHistoryAPI
