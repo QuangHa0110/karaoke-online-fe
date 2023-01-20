@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-find-dom-node */
 /* eslint-disable no-unused-vars */
-import { LikeOutlined, PlayCircleOutlined } from '@ant-design/icons'
+import { HeartFilled, HeartOutlined, LikeOutlined, PlayCircleOutlined } from '@ant-design/icons'
 import { Button, Card, Col, List, notification, Row } from 'antd'
 import SongItem from 'components/SongItem/SongItem'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { connect } from 'react-redux'
 import { useParams, withRouter } from 'react-router-dom'
@@ -73,15 +73,32 @@ const SongDetailPage = (props) => {
       }
     }
   }, [song.currentSong])
+  const [isFavoriteSong, setIsFavoriteSong] = useState(false)
   const handleAddYourFavoriteSong = () => {
     if (authorized) {
-      notification.success({
-        message: 'Thêm bài hát thành công',
+      setIsFavoriteSong(true)
+      dispatch({
+        type: 'favorite-song/ADD_FAVORITE_SONG',
+        payload: {
+          data: {
+            song: id,
+            user: user.id,
+          },
+        },
       })
     } else {
       history.push('/auth/login', { previousPath: props.location.pathname })
     }
   }
+  const handleRemoveYourFavoriteSong = () => {
+    if (authorized) {
+      setIsFavoriteSong(false)
+      // notification.success({
+      //   message: ' bài hát thành công',
+      // })
+    }
+  }
+
   return (
     <div style={{ width: '80%', margin: 'auto' }}>
       <Helmet title={song.currentSong ? song.currentSong.attributes.name : ''} />
@@ -100,7 +117,7 @@ const SongDetailPage = (props) => {
             <ReactPlayer
               width="100%"
               height={500}
-              playing
+              // playing
               url={
                 song.currentSong
                   ? formatUrlImage(song.currentSong.attributes.media.data.attributes.url)
@@ -123,13 +140,26 @@ const SongDetailPage = (props) => {
             </h5>
             <div style={{ width: '100%', textAlign: 'center', marginTop: '50px' }}>
               <Button
-                type="primary"
+                type="dashed"
+                danger
                 size="large"
                 shape="round"
-                icon={<LikeOutlined />}
+                hidden={isFavoriteSong}
+                icon={<HeartOutlined />}
                 onClick={handleAddYourFavoriteSong}
               >
                 Thêm vào danh sách bài hát yêu thích
+              </Button>
+              <Button
+                type="ghost"
+                danger
+                size="large"
+                shape="round"
+                hidden={!isFavoriteSong}
+                icon={<HeartFilled />}
+                onClick={handleRemoveYourFavoriteSong}
+              >
+                Đã thêm danh sách bài hát yêu thích
               </Button>
             </div>
           </Col>
