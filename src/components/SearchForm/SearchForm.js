@@ -7,9 +7,9 @@ const SearchForm = () => {
   return (
     <Row
       style={{
-        width: '60%',
+        width: '50%',
         margin: 'auto',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         alignItems: 'center',
       }}
     >
