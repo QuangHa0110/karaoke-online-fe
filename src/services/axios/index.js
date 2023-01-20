@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { notification } from 'antd'
 import axios from 'axios'
+import { LOGOUT } from 'redux/user/sagas'
 import store from 'store'
 import { logout } from '../jwt'
 
@@ -33,18 +35,17 @@ apiClient.interceptors.response.use(undefined, (error) => {
         description: 'Bạn không đủ quyền thực hiện',
       })
 
-      logout()
+      LOGOUT()
     } else if (data.error.status >= 500) {
       notification.error({
         message: 'Hệ thống đang bận, vui lòng thử lại sau',
       })
-      logout()
     } else if (data.error.status === 401) {
       notification.error({
         message: 'Lỗi',
         description: 'Đã có lỗi xảy ra, hãy đăng nhập lại',
       })
-      logout()
+      LOGOUT()
     }
   }
 })
