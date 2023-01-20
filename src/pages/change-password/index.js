@@ -23,9 +23,7 @@ const SystemChangePassword = (props) => {
       <Helmet title="Đổi mật khẩu" />
       <Row gutter={16} style={{ width: '80%', margin: 'auto' }}>
         <Col span={5}>
-          <Card>
-            <PersonalMenu />
-          </Card>
+          <PersonalMenu />
         </Col>
         <Col span={19}>
           <Card title={<h3 style={{ fontWeight: 'bold' }}>ĐỔI MẬT KHẨU</h3>}>

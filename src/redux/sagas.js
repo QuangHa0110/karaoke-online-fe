@@ -7,7 +7,18 @@ import song from './song/sagas'
 import search from './search-result/sagas'
 import slide from './slide/sagas'
 import songHistory from './song-history/sagas'
+import favoriteSong from './favorite-song/sagas'
 
 export default function* rootSaga() {
-  yield all([user(), menu(), settings(), singer(), song(), search(), slide(), songHistory()])
+  yield all([
+    user(),
+    menu(),
+    settings(),
+    singer(),
+    song(),
+    search(),
+    slide(),
+    songHistory(),
+    favoriteSong(),
+  ])
 }
