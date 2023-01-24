@@ -1,9 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { Button, Col, Input, Row } from 'antd'
 import { history } from 'index'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 const SearchForm = () => {
+  const [keyword, setKeyword] = useState('')
+
+  const location = useLocation()
+  useEffect(() => {
+    setKeyword('')
+  }, [location.pathname])
   return (
     <Row
       style={{
@@ -19,11 +26,15 @@ const SearchForm = () => {
           style={{ borderRadius: '10px', backgroundColor: '$gray-2' }}
           placeholder="Nhập từ khóa tìm kiếm"
           allowClear
-          onSearch={(keyword) => {
-            if (keyword) {
+          value={keyword}
+          onChange={(value) => {
+            setKeyword(value.target.value)
+          }}
+          onSearch={(value) => {
+            if (value) {
               history.push({
                 pathname: '/public/search',
-                search: `keyword=${keyword}`,
+                search: `keyword=${value}`,
               })
             }
           }}
