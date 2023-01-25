@@ -1,7 +1,7 @@
 import actions from './actions'
 
 const initialState = {
-//   menuData: [],
+  isFavoriteSong: false,
 }
 
 export default function userReducer(state = initialState, action) {
