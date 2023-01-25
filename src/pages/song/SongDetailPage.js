@@ -17,17 +17,18 @@ import formatUrlImage from 'services/ultis/helper/FormatHepler'
 import { MUSIC_GENRE_LABEL } from 'services/ultis/constants'
 import { Helmet } from 'react-helmet'
 
-const mapStateToProps = ({ user, dispatch, song }) => ({
+const mapStateToProps = ({ user, dispatch, song, favoriteSong }) => ({
   dispatch,
   user,
   authorized: user.authorized,
   song,
+  favoriteSong,
 })
 
 const SongDetailPage = (props) => {
   // get id from path url
   const { id } = useParams()
-  const { authorized, dispatch, song, user } = props
+  const { authorized, dispatch, song, user, favoriteSong } = props
   useEffect(() => {
     dispatch({
       type: 'song/GET_SONG_BY_ID',
@@ -35,15 +36,24 @@ const SongDetailPage = (props) => {
         id,
       },
     })
-    dispatch({
-      type: 'song-history/CREATE_SONG_HISTORY',
-      payload: {
-        data: {
+    if (user.authorized) {
+      dispatch({
+        type: 'song-history/CREATE_SONG_HISTORY',
+        payload: {
+          data: {
+            song: id,
+            user: user.id,
+          },
+        },
+      })
+      dispatch({
+        type: 'favorite-song/CHECK_FAVORITE_SONG',
+        payload: {
           song: id,
           user: user.id,
         },
-      },
-    })
+      })
+    }
   }, [])
 
   useEffect(() => {
@@ -73,7 +83,10 @@ const SongDetailPage = (props) => {
       }
     }
   }, [song.currentSong])
-  const [isFavoriteSong, setIsFavoriteSong] = useState(false)
+  const [isFavoriteSong, setIsFavoriteSong] = useState(favoriteSong.isFavoriteSong)
+  useEffect(() => {
+    setIsFavoriteSong(favoriteSong.isFavoriteSong)
+  }, [favoriteSong.isFavoriteSong])
   const handleAddYourFavoriteSong = () => {
     if (authorized) {
       setIsFavoriteSong(true)
@@ -93,9 +106,13 @@ const SongDetailPage = (props) => {
   const handleRemoveYourFavoriteSong = () => {
     if (authorized) {
       setIsFavoriteSong(false)
-      // notification.success({
-      //   message: ' bài hát thành công',
-      // })
+      dispatch({
+        type: 'favorite-song/REMOVE_FAVORITE_SONG',
+        payload: {
+          song: id,
+          user: user.id,
+        },
+      })
     }
   }
 
