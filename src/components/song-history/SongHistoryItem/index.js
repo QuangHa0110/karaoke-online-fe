@@ -51,9 +51,9 @@ const SongHistoryItem = (props) => {
           />
         </Col>
         <Col span={10}>
-          <h4>{item.attributes.song ? item.attributes.song.data.attributes.name : null}</h4>
+          <h4>{item && item.attributes.song ? item.attributes.song.data.attributes.name : null}</h4>
           <div>
-            {item.attributes.song
+            {item && item.attributes.song && item.attributes.song.data.attributes.singer.data
               ? item.attributes.song.data.attributes.singer.data.attributes.name
               : null}
           </div>

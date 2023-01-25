@@ -63,6 +63,15 @@ const ProfileMenu = ({ dispatch, user }) => {
     {
       key: Math.random(),
       label: (
+        <Link to="/favorite-song">
+          <i className="fe fe-headphones mr-2" />
+          <FormattedMessage id="topBar.profileMenu.favoriteSong" />
+        </Link>
+      ),
+    },
+    {
+      key: Math.random(),
+      label: (
         <Link to="/song-history">
           <i className="fe fe-mic mr-2" />
           <FormattedMessage id="topBar.profileMenu.history" />

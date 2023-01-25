@@ -102,6 +102,11 @@ const routes = [
     exact: true,
   },
   {
+    path: '/favorite-song',
+    Component: lazy(() => import('pages/favorite-song')),
+    exact: true,
+  },
+  {
     path: '/personal-information',
     Component: lazy(() => import('pages/personal-information')),
     exact: true,

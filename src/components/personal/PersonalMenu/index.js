@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { UserOutlined } from '@ant-design/icons'
-import { Avatar, Menu, Row } from 'antd'
-import React from 'react'
+import { Avatar, Card, Menu, Row } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const mapStateToProps = ({ user, dispatch }) => ({
   dispatch,
@@ -17,6 +18,15 @@ const PersonalMenu = (props) => {
       type: 'user/LOGOUT',
     })
   }
+
+  const [selectedMenu, setSelectedMenu] = useState()
+  const location = useLocation()
+
+
+  useEffect(() => {
+    const menuItem = items.find((item) => item.key === location.pathname.replace('/', ''))
+    setSelectedMenu(menuItem.key)
+  }, [])
   const items = [
     {
       label: <Link to="/personal-information">Thông tin cá nhân</Link>,
@@ -27,6 +37,11 @@ const PersonalMenu = (props) => {
       label: <Link to="/my-music">Nhạc của tui</Link>,
       key: 'my-music',
       icon: <i className="fe fe-music mr-2" />,
+    },
+    {
+      label: <Link to="/favorite-song">Bài hát yêu thích</Link>,
+      key: 'favorite-song',
+      icon: <i className="fe fe-headphones mr-2" />,
     },
     {
       label: <Link to="/song-history">Lịch sử bài hát</Link>,
@@ -49,7 +64,7 @@ const PersonalMenu = (props) => {
     },
   ]
   return (
-    <>
+    <Card>
       <Row justify="center">
         <Avatar
           size={{
@@ -72,10 +87,10 @@ const PersonalMenu = (props) => {
           borderRight: 0,
         }}
         // onClick={(e) => handleChangeMenu(e)}
-        // selectedKeys={selectedMenu}
+        selectedKeys={selectedMenu}
         items={items}
       />
-    </>
+    </Card>
   )
 }
 

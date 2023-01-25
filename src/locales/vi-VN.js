@@ -14,6 +14,7 @@ const messages = {
   'topBar.profileMenu.phone': 'SĐT',
   'topBar.profileMenu.editProfile': 'Thông tin cá nhân',
   'topBar.profileMenu.myMusic': 'Nhạc của tui',
+  'topBar.profileMenu.favoriteSong': 'Bài hát yêu thích',
   'topBar.profileMenu.history': 'Lịch sử bài hát',
   'topBar.profileMenu.changePassword': 'Đổi mật khẩu',
   'topBar.profileMenu.logout': 'Đăng xuất',
