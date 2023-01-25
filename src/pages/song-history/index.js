@@ -73,7 +73,7 @@ const SongHistory = (props) => {
       setHasMore(false)
     } else if (pagination.totalSongHistories < DEFAULT_PAGE_SIZE) {
       setHasMore(false)
-    } else if (pagination.totalPages < pagination.current) {
+    } else if (pagination.totalPages <= pagination.current) {
       setHasMore(false)
     } else {
       setHasMore(true)

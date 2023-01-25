@@ -11,14 +11,14 @@ const mapStateToProps = ({ dispatch, songHistory, user }) => ({
   songHistory,
   user,
 })
-const SongHistoryItem = (props) => {
+const FavoriteSongItem = (props) => {
   const { item, dispatch, user, songHistory } = props
   const [hidden, setHidden] = useState(true)
 
-  const deleteSongHistory = (e) => {
+  const deleteFavoriteSong = (e) => {
     e.stopPropagation()
     dispatch({
-      type: 'song-history/DELETE_SONG_HISTORY',
+      type: 'favorite-song/REMOVE_FAVORITE_SONG',
       payload: {
         id: item.id,
       },
@@ -58,23 +58,16 @@ const SongHistoryItem = (props) => {
               : null}
           </div>
         </Col>
-        <Col span={4} style={{ display: 'flex', alignItems: 'center' }}>
-          <div>
-            <i className="fe fe-clock" />
-            {moment(item.attributes.createdAt).format('HH:mm-DD/MM/YYYY')}
-          </div>
-        </Col>
-        <Col span={4} hidden={hidden}>
+
+        <Col span={8} hidden={hidden}>
           <Row gutter={16} justify="end">
-            <Col onClick={deleteSongHistory}>
-              <Tooltip title="Xóa bài hát khỏi lịch sử bài hát">
-                <i className="fe fe-x" style={{ fontSize: '2rem' }} />
+            <Col onClick={deleteFavoriteSong}>
+              <Tooltip title="Bỏ thích">
+                <i className="fe fe-heart" style={{ fontSize: '2rem', color: '#FE251B' }} />
               </Tooltip>
             </Col>
             <Col>
-              <Tooltip title="Chia sẻ bài hát">
-                <i className="fe fe-share-2" style={{ fontSize: '2rem', color: '#1778F2' }} />
-              </Tooltip>
+              <i className="fe fe-share-2" style={{ fontSize: '2rem', color: '#1778F2' }} />
             </Col>
           </Row>
         </Col>
@@ -83,4 +76,4 @@ const SongHistoryItem = (props) => {
   )
 }
 
-export default connect(mapStateToProps)(SongHistoryItem)
+export default connect(mapStateToProps)(FavoriteSongItem)

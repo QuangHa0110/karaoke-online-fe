@@ -134,7 +134,7 @@ const SongDetailPage = (props) => {
             <ReactPlayer
               width="100%"
               height={500}
-              // playing
+              playing
               url={
                 song.currentSong
                   ? formatUrlImage(song.currentSong.attributes.media.data.attributes.url)

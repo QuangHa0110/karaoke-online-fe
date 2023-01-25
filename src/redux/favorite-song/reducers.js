@@ -2,6 +2,10 @@ import actions from './actions'
 
 const initialState = {
   isFavoriteSong: false,
+  favoriteSongs: [],
+  totalFavoriteSongs: 0,
+  totalPages: 0,
+  loading: false,
 }
 
 export default function userReducer(state = initialState, action) {
