@@ -61,7 +61,7 @@ const Home = ({ song, dispatch, slide }) => {
       {/* <SearchForm /> */}
       <div style={{ width: '80%', margin: 'auto' }}>
         <Slider {...settings}>
-          {slide.slides.map((element) => {
+          {slide.slides?.map((element) => {
             return (
               <div key={element.id}>
                 <img

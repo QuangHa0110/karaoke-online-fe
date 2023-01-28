@@ -5,7 +5,7 @@ import React from 'react'
 // Danh sách bài hát
 const SongList = (props) => {
   const { data } = props
-  return data.length > 0 ? (
+  return data?.length > 0 ? (
     <List
       grid={{
         gutter: 16,
