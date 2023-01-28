@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { Card, Col, Row, Tooltip } from 'antd'
+import { Button, Card, Col, Input, Modal, notification, Row, Tooltip } from 'antd'
 import moment from 'moment'
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { history } from 'index'
 import formatUrlImage from 'services/ultis/helper/FormatHepler'
+import copy from 'copy-to-clipboard'
 
 const mapStateToProps = ({ dispatch, songHistory, user }) => ({
   dispatch,
@@ -22,6 +23,15 @@ const SongHistoryItem = (props) => {
       payload: {
         id: item.id,
       },
+    })
+  }
+  const [isOpenShareLink, setIsOpenShareLink] = useState(false)
+  const shareLink = (e) => {
+    e.stopPropagation()
+    copy(`${window.location.origin}/public/song/${item.attributes.song.data.id}`)
+    setIsOpenShareLink(false)
+    notification.success({
+      message: 'Đã copy đường link',
     })
   }
   return (
@@ -71,11 +81,43 @@ const SongHistoryItem = (props) => {
                 <i className="fe fe-x" style={{ fontSize: '2rem' }} />
               </Tooltip>
             </Col>
-            <Col>
+            <Col
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsOpenShareLink(true)
+              }}
+            >
               <Tooltip title="Chia sẻ bài hát">
                 <i className="fe fe-share-2" style={{ fontSize: '2rem', color: '#1778F2' }} />
               </Tooltip>
             </Col>
+            <Modal
+              title={`Chia sẻ bài hát - ${
+                item && item.attributes.song ? item.attributes.song.data.attributes.name : null
+              }`}
+              open={isOpenShareLink}
+              footer={null}
+              width="40%"
+              centered
+              onCancel={(e) => {
+                e.stopPropagation()
+                setIsOpenShareLink(false)
+              }}
+            >
+              <Row gutter={16}>
+                <Col span={20}>
+                  <Input
+                    readOnly
+                    defaultValue={`${window.location.origin}/public/song/${item.attributes.song.data.id}`}
+                  />
+                </Col>
+                <Col span={4}>
+                  <Button type="primary" onClick={shareLink}>
+                    Copy link
+                  </Button>
+                </Col>
+              </Row>
+            </Modal>
           </Row>
         </Col>
       </Row>

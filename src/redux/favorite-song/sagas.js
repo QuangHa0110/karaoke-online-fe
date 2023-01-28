@@ -109,6 +109,19 @@ export function* REMOVE_FAVORITE_SONG({ payload }) {
     })
   }
 }
+export function* DELETE_FAVORITE_SONG_BY_ID({ payload }) {
+  const success = yield call(FavoriteSongAPI.removeFavoriteSong, payload.id)
+  if (success) {
+    const { favoriteSongs } = yield select((state) => state.favoriteSong)
+    yield put({
+      type: 'favorite-song/SET_STATE',
+      payload: {
+        favoriteSongs: favoriteSongs.filter((element) => element.id !== payload.id),
+        isFavoriteSong: false,
+      },
+    })
+  }
+}
 
 export default function* rootSaga() {
   yield all([
@@ -116,5 +129,6 @@ export default function* rootSaga() {
     takeEvery(actions.REMOVE_FAVORITE_SONG, REMOVE_FAVORITE_SONG),
     takeEvery(actions.CHECK_FAVORITE_SONG, CHECK_FAVORITE_SONG),
     takeEvery(actions.GET_FAVORITE_SONGS, GET_FAVORITE_SONGS),
+    takeEvery(actions.DELETE_FAVORITE_SONG_BY_ID, DELETE_FAVORITE_SONG_BY_ID),
   ])
 }

@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { connect } from 'react-redux'
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'services/ultis/constants'
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, DEFAULT_TOTAL_ELEMENTS } from 'services/ultis/constants'
 
 const mapStateToProps = ({ dispatch, user, favoriteSong }) => ({
   dispatch,
@@ -63,9 +63,7 @@ const FavoriteSong = (props) => {
   const [hasMore, setHasMore] = useState(true)
 
   useEffect(() => {
-    console.log('🚀 ~ file: index.js:76 ~ FavoriteSong ~ pagination', pagination)
-
-    if (pagination.totalSongHistories > 300) {
+    if (pagination.totalSongHistories > DEFAULT_TOTAL_ELEMENTS) {
       setHasMore(false)
     } else if (pagination.totalSongHistories < DEFAULT_PAGE_SIZE) {
       setHasMore(false)
