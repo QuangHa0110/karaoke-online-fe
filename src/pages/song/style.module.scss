@@ -1,0 +1,20 @@
+@import 'components/mixins.scss';
+
+.start_recording_button {
+  background-color: $green_button !important ;
+  border-color: $green_button !important;
+}
+.start_recording_button:hover {
+  background-color: $green_button_secondary !important ;
+  border-color: $green_button_secondary !important;
+}
+
+.stopped_recording_button {
+  background-color: $red !important;
+  border-color: $red !important;
+}
+
+.stopped_recording_button:hover {
+  background-color: $red_secondary !important;
+  border-color: $red_secondary !important;
+}

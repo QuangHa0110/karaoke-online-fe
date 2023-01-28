@@ -6,29 +6,33 @@ import { connect } from 'react-redux'
 import { history } from 'index'
 import formatUrlImage from 'services/ultis/helper/FormatHepler'
 import copy from 'copy-to-clipboard'
+import ReactPlayer from 'react-player'
+import { HeartOutlined } from '@ant-design/icons'
 
-const mapStateToProps = ({ dispatch, songHistory, user }) => ({
+const mapStateToProps = ({ dispatch, mySong, user }) => ({
   dispatch,
-  songHistory,
+  mySong,
   user,
 })
-const SongHistoryItem = (props) => {
-  const { item, dispatch, user, songHistory } = props
+const MySongItem = (props) => {
+  const { item, dispatch, user, mySong } = props
   const [hidden, setHidden] = useState(true)
 
-  const deleteSongHistory = (e) => {
+  const deleteFavoriteSong = (e) => {
     e.stopPropagation()
     dispatch({
-      type: 'song-history/DELETE_SONG_HISTORY',
+      type: 'my-song/DELETE_MY_SONG_BY_ID',
       payload: {
         id: item.id,
+        name: item.attributes.name,
       },
     })
   }
+
   const [isOpenShareLink, setIsOpenShareLink] = useState(false)
   const shareLink = (e) => {
     e.stopPropagation()
-    copy(`${window.location.origin}/public/song/${item.attributes.song.data.id}`)
+    copy(formatUrlImage(item.attributes.video.data.attributes.url))
     setIsOpenShareLink(false)
     notification.success({
       message: 'Đã copy đường link',
@@ -38,9 +42,6 @@ const SongHistoryItem = (props) => {
     <Card
       hoverable
       bordered={false}
-      onClick={() => {
-        history.push(`/public/song/${item.attributes.song.data.id}`)
-      }}
       onMouseEnter={() => {
         setHidden(false)
       }}
@@ -49,36 +50,30 @@ const SongHistoryItem = (props) => {
       }}
     >
       <Row gutter={16} style={{ width: '100%' }} align="middle">
-        <Col span={6}>
-          <img
-            src={
-              item.attributes.song
-                ? formatUrlImage(item.attributes.song.data.attributes.image.data.attributes.url)
+        <Col span={12}>
+          <ReactPlayer
+            width="100%"
+            url={
+              item.attributes.video
+                ? formatUrlImage(item.attributes.video.data.attributes.url)
                 : null
             }
-            style={{ width: '100%' }}
-            alt=""
+            controls
           />
         </Col>
-        <Col span={10}>
-          <h4>{item && item.attributes.song ? item.attributes.song.data.attributes.name : null}</h4>
-          <div>
-            {item && item.attributes.song && item.attributes.song.data.attributes.singer.data
-              ? item.attributes.song.data.attributes.singer.data.attributes.name
-              : null}
-          </div>
-        </Col>
-        <Col span={4} style={{ display: 'flex', alignItems: 'center' }}>
+        <Col span={6}>
+          <h5>{item ? item.attributes.name : null}</h5>
           <div>
             <i className="fe fe-clock" />
             {moment(item.attributes.createdAt).format('HH:mm-DD/MM/YYYY')}
           </div>
         </Col>
-        <Col span={4} hidden={hidden}>
+
+        <Col span={6} hidden={hidden}>
           <Row gutter={16} justify="end">
-            <Col onClick={deleteSongHistory}>
-              <Tooltip title="Xóa bài hát khỏi lịch sử bài hát">
-                <i className="fe fe-x" style={{ fontSize: '2rem' }} />
+            <Col onClick={deleteFavoriteSong}>
+              <Tooltip title="Xóa bài hát">
+                <i className="fe fe-x" style={{ fontSize: '2rem', color: '#FE251B' }} />
               </Tooltip>
             </Col>
             <Col
@@ -92,9 +87,7 @@ const SongHistoryItem = (props) => {
               </Tooltip>
             </Col>
             <Modal
-              title={`Chia sẻ bài hát - ${
-                item && item.attributes.song ? item.attributes.song.data.attributes.name : null
-              }`}
+              title={`Chia sẻ bài hát - ${item ? item.attributes.name : null}`}
               open={isOpenShareLink}
               footer={null}
               width="40%"
@@ -108,7 +101,7 @@ const SongHistoryItem = (props) => {
                 <Col span={20}>
                   <Input
                     readOnly
-                    defaultValue={`${window.location.origin}/public/song/${item.attributes.song.data.id}`}
+                    defaultValue={formatUrlImage(item.attributes.video.data.attributes.url)}
                   />
                 </Col>
                 <Col span={4}>
@@ -125,4 +118,4 @@ const SongHistoryItem = (props) => {
   )
 }
 
-export default connect(mapStateToProps)(SongHistoryItem)
+export default connect(mapStateToProps)(MySongItem)

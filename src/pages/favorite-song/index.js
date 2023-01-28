@@ -1,51 +1,45 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import { DeleteOutlined, ShareAltOutlined } from '@ant-design/icons'
-import { Affix, Card, Checkbox, Col, Row, Skeleton } from 'antd'
+import { Card, Col, Row, Skeleton } from 'antd'
+import FavoriteSongList from 'components/favorite-song/FavoriteSongList'
 import PersonalMenu from 'components/personal/PersonalMenu'
-import SongHistoryList from 'components/song-history/SongHistoryList'
-import { func } from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { connect } from 'react-redux'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, DEFAULT_TOTAL_ELEMENTS } from 'services/ultis/constants'
 
-const mapStateToProps = ({ dispatch, songHistory, user }) => ({
+const mapStateToProps = ({ dispatch, user, favoriteSong }) => ({
   dispatch,
-  songHistory,
   user,
+  favoriteSong,
 })
-
-const SongHistory = (props) => {
-  const { dispatch, songHistory, user } = props
-
+const FavoriteSong = (props) => {
+  const { dispatch, user, favoriteSong } = props
   const [pagination, setPagination] = useState({
     current: DEFAULT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
-    totalSongHistories: songHistory.totalSongHistories,
-    totalPages: songHistory.totalPages,
+    totalFavoriteSongs: favoriteSong.totalFavoriteSongs,
+    totalPages: favoriteSong.totalPages,
   })
   useEffect(() => {
     setPagination({
       ...pagination,
-      totalPages: songHistory.totalPages,
-      totalSongHistories: songHistory.totalSongHistories,
+      totalPages: favoriteSong.totalPages,
+      totalFavoriteSongs: favoriteSong.totalFavoriteSongs,
     })
-  }, [songHistory.totalPages, songHistory.totalSongHistories])
+  }, [favoriteSong.totalPages, favoriteSong.totalFavoriteSongs])
   useEffect(() => {
     dispatch({
-      type: 'song-history/SET_STATE',
+      type: 'favorite-song/SET_STATE',
       payload: {
-        songHistories: [],
+        favoriteSongs: [],
       },
     })
   }, [])
-
   useEffect(() => {
     dispatch({
-      type: 'song-history/GET_SONG_HISTORIES',
-
+      type: 'favorite-song/GET_FAVORITE_SONGS',
       payload: {
         'pagination[page]': pagination.current,
         'pagination[pageSize]': pagination.pageSize,
@@ -57,7 +51,7 @@ const SongHistory = (props) => {
             },
           },
         },
-        sort: ['createdAt:desc'],
+        sort: ['song.name:asc'],
       },
     })
   }, [pagination.current])
@@ -79,25 +73,24 @@ const SongHistory = (props) => {
       setHasMore(true)
     }
   }, [pagination])
-
   return (
     <div>
-      <Helmet title="Lịch sử bài hát" />
+      <Helmet title="Bài hát yêu thích" />
       <Row gutter={16} style={{ width: '80%', margin: 'auto' }}>
         <Col span={5}>
           <PersonalMenu />
         </Col>
         <Col span={19}>
-          <Card title={<h3 style={{ fontWeight: 'bold' }}>Lịch sử bài hát</h3>}>
+          <Card title={<h3 style={{ fontWeight: 'bold' }}>Bài hát yêu thích</h3>}>
             <InfiniteScroll
               key="11"
-              dataLength={songHistory.songHistories.length}
+              dataLength={favoriteSong.favoriteSongs.length}
               next={fetchMoreData}
               hasMore={hasMore}
               loader={<Skeleton active />}
               // endMessage={<div style={{ textAlign: 'center' }}>Bạn đã xem hết thông báo</div>}
             >
-              <SongHistoryList data={songHistory.songHistories} />
+              <FavoriteSongList data={favoriteSong.favoriteSongs} />
             </InfiniteScroll>
           </Card>
         </Col>
@@ -106,4 +99,4 @@ const SongHistory = (props) => {
   )
 }
 
-export default connect(mapStateToProps)(SongHistory)
+export default connect(mapStateToProps)(FavoriteSong)

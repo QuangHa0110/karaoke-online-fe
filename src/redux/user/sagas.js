@@ -40,7 +40,7 @@ export function* FORGOT_PASSWORD({ payload }) {
   })
 }
 export function* CHANGE_PASSWORD({ payload }) {
-  console.log("🚀 ~ file: sagas.js:43 ~ function*CHANGE_PASSWORD ~ payload", payload)
+  console.log('🚀 ~ file: sagas.js:43 ~ function*CHANGE_PASSWORD ~ payload', payload)
   yield put({
     type: 'user/SET_STATE',
     payload: {
@@ -55,7 +55,7 @@ export function* CHANGE_PASSWORD({ payload }) {
     yield put({
       type: 'user/LOGOUT',
     })
-  }else{
+  } else {
     notification.error({
       message: 'Đổi mật khẩu không thành công',
     })
@@ -115,6 +115,9 @@ export function* LOGIN({ payload }) {
     })
   }
   if (!success) {
+    notification.error({
+      message: 'Tài khoản hoặc mật khẩu chưa chính xác',
+    })
     yield put({
       type: 'user/SET_STATE',
       payload: {

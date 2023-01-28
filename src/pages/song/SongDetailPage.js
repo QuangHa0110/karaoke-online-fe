@@ -1,21 +1,34 @@
+/* eslint-disable react/no-string-refs */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-find-dom-node */
 /* eslint-disable no-unused-vars */
-import { HeartFilled, HeartOutlined, LikeOutlined, PlayCircleOutlined } from '@ant-design/icons'
-import { Button, Card, Col, List, notification, Row } from 'antd'
+import {
+  HeartFilled,
+  HeartOutlined,
+  LikeOutlined,
+  PlayCircleOutlined,
+  VideoCameraAddOutlined,
+  VideoCameraOutlined,
+} from '@ant-design/icons'
+import { Button, Card, Col, Form, Input, List, Modal, notification, Row } from 'antd'
 import SongItem from 'components/SongItem/SongItem'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player'
 import { connect } from 'react-redux'
 import { useParams, withRouter } from 'react-router-dom'
 import { history } from 'index'
-import userReducer from 'redux/user/reducers'
-import actions from 'redux/user/actions'
-import { CHANGE_SETTING } from 'redux/settings/sagas'
 import SongList from 'components/SongList/SongList'
 import formatUrlImage from 'services/ultis/helper/FormatHepler'
 import { MUSIC_GENRE_LABEL } from 'services/ultis/constants'
 import { Helmet } from 'react-helmet'
+import { useReactMediaRecorder } from 'react-media-recorder'
+import screenfull from 'screenfull'
+import { findDOMNode } from 'react-dom'
+import FormItem from 'antd/es/form/FormItem'
+import moment from 'moment'
+import UploadFileAPI from 'services/api/upload-file.api'
+import apiClient from 'services/axios'
+import styles from './style.module.scss'
 
 const mapStateToProps = ({ user, dispatch, song, favoriteSong }) => ({
   dispatch,
@@ -29,6 +42,10 @@ const SongDetailPage = (props) => {
   // get id from path url
   const { id } = useParams()
   const { authorized, dispatch, song, user, favoriteSong } = props
+  const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({
+    screen: true,
+    video: true,
+  })
   useEffect(() => {
     dispatch({
       type: 'song/GET_SONG_BY_ID',
@@ -115,10 +132,109 @@ const SongDetailPage = (props) => {
       })
     }
   }
+  const [isPlaying, setIsPlaying] = useState(true)
+  const player = useRef()
+  const onClickFullscreen = () => {
+    screenfull.request(findDOMNode(player.current))
+  }
 
+  useEffect(() => {
+    if (status === 'recording') {
+      onClickFullscreen()
+      player.current.seekTo(0, 'seconds')
+      setIsPlaying(true)
+      setIsRecording(true)
+    }
+
+    if (status === 'stopped') {
+      screenfull.exit()
+      setIsPlaying(false)
+      setIsRecording(false)
+      setIsModalOpen(true)
+    }
+  }, [status])
+
+  const [isRecording, setIsRecording] = useState(false)
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  function getDefaultNameRecording() {
+    return `${
+      song.currentSong ? song.currentSong.attributes.name : ''
+    }_${moment().unix()}`.replaceAll(' ', '_')
+  }
+
+  async function uploadVideo(url) {
+    const videoBlob = await fetch(url).then((r) => r.blob())
+    const file = new File(
+      [videoBlob],
+      `${
+        song.currentSong ? song.currentSong.attributes.name : ''
+      }_${moment().unix()}.mp4`.replaceAll(' ', '_'),
+      { type: 'video/mp4' },
+    )
+
+    const formData = new FormData()
+    formData.append('files', file)
+    const response = await apiClient.post('/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    if (response) {
+      const videoId = response.data[0].id
+      const userId = user.id
+      const songId = song.currentSong.id
+      const payload = {
+        data: {
+          video: videoId,
+          user: userId,
+          song: songId,
+          name: form.getFieldValue('name') ? form.getFieldValue('name') : getDefaultNameRecording(),
+        },
+      }
+      dispatch({
+        type: 'my-song/CREATE_MY_SONG',
+        payload,
+      })
+    }
+
+    return response
+  }
+  const handleOk = () => {
+    uploadVideo(mediaBlobUrl).then((response) => {
+      if (response) {
+        setIsModalOpen(false)
+      }
+    })
+  }
+
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
+
+  const [form] = Form.useForm()
   return (
     <div style={{ width: '80%', margin: 'auto' }}>
       <Helmet title={song.currentSong ? song.currentSong.attributes.name : ''} />
+      <Modal
+        title="Lưu ghi âm"
+        width="50%"
+        open={isModalOpen}
+        onOk={handleOk}
+        okText="Lưu"
+        onCancel={handleCancel}
+      >
+        <Form form={form} name="recording_form">
+          <FormItem name="name" label="Tên ghi âm" required>
+            <Input
+              defaultValue={`${
+                song.currentSong ? song.currentSong.attributes.name : ''
+              }_${moment().unix()}`.replaceAll(' ', '_')}
+            />
+          </FormItem>
+        </Form>
+        <ReactPlayer width="100%" url={mediaBlobUrl} controls />
+      </Modal>
       <Card>
         <Row>
           <h3 style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
@@ -132,9 +248,10 @@ const SongDetailPage = (props) => {
         <Row gutter={[30, 30]}>
           <Col span={16} style={{ cursor: 'pointer' }}>
             <ReactPlayer
+              ref={player}
               width="100%"
               height={500}
-              // playing
+              playing={isPlaying}
               url={
                 song.currentSong
                   ? formatUrlImage(song.currentSong.attributes.media.data.attributes.url)
@@ -142,6 +259,37 @@ const SongDetailPage = (props) => {
               }
               controls
             />
+            {authorized ? (
+              <>
+                <br />
+                <Button
+                  type="primary"
+                  danger
+                  shape="round"
+                  hidden={isRecording}
+                  icon={<VideoCameraAddOutlined />}
+                  className={styles.start_recording_button}
+                  onClick={() => {
+                    startRecording()
+                  }}
+                >
+                  Start Recording
+                </Button>
+                <Button
+                  type="primary"
+                  danger
+                  shape="round"
+                  icon={<VideoCameraOutlined />}
+                  hidden={!isRecording}
+                  className={styles.stopped_recording_button}
+                  onClick={() => {
+                    stopRecording()
+                  }}
+                >
+                  Stop Recording
+                </Button>
+              </>
+            ) : null}
           </Col>
           <Col span={8}>
             <h5>
@@ -183,6 +331,13 @@ const SongDetailPage = (props) => {
         </Row>
       </Card>
       <br />
+      {/* <div>
+        <p>{status}</p>
+
+        <ReactPlayer width="100%" height={500} playing url={mediaBlobUrl} controls />
+        <video src={mediaBlobUrl} controls autoPlay loop />
+      </div>
+      <br /> */}
       <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT CÙNG THỂ LOẠI</h3>}>
         <SongList data={song.sameGenreSongs} />
       </Card>
