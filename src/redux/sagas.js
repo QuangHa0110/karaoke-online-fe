@@ -8,6 +8,7 @@ import search from './search-result/sagas'
 import slide from './slide/sagas'
 import songHistory from './song-history/sagas'
 import favoriteSong from './favorite-song/sagas'
+import mySong from './my-song/sagas'
 
 export default function* rootSaga() {
   yield all([
@@ -20,5 +21,6 @@ export default function* rootSaga() {
     slide(),
     songHistory(),
     favoriteSong(),
+    mySong(),
   ])
 }

@@ -20,6 +20,7 @@ const SingerListPage = ({ dispatch, singer }) => {
         populate: '*',
         'pagination[page]': singer.pagination.current,
         'pagination[pageSize]': singer.pagination.pageSize,
+        sort: ['name:asc'],
       },
     })
   }, [singer.pagination.current])

@@ -9,6 +9,7 @@ import search from './search-result/reducers'
 import slide from './slide/reducers'
 import songHistory from './song-history/reducers'
 import favoriteSong from './favorite-song/reducers'
+import mySong from './my-song/reducers'
 
 export default (history) =>
   combineReducers({
@@ -22,4 +23,5 @@ export default (history) =>
     slide,
     songHistory,
     favoriteSong,
+    mySong,
   })
