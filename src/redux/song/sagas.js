@@ -37,6 +37,38 @@ export function* GET_LATEST_SONGS() {
     })
   }
 }
+export function* GET_HOT_SONGS() {
+  yield put({
+    type: 'song/SET_STATE',
+    payload: {
+      loading: true,
+    },
+  })
+
+  const payload = {
+    sort: ['createdAt:desc'],
+    'pagination[page]': 1,
+    'pagination[pageSize]': 8,
+    populate: '*',
+  }
+  const success = yield call(SongAPI.getSongs, payload)
+  if (success) {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        hotSongs: success.data.data,
+        loading: false,
+      },
+    })
+  } else {
+    yield put({
+      type: 'song/SET_STATE',
+      payload: {
+        loading: false,
+      },
+    })
+  }
+}
 
 export function* GET_SONGS_BY_GENRE({ payload }) {
   yield put({
@@ -159,9 +191,9 @@ export function* GET_SAME_SINGER_SONGS({ payload }) {
       id: {
         $ne: payload.id,
       },
-      singer: {
+      singers: {
         id: {
-          $eq: payload.singerId,
+          $in: payload.singerIds,
         },
       },
     },
@@ -192,5 +224,6 @@ export default function* rootSaga() {
     takeEvery(actions.GET_SONG_BY_ID, GET_SONG_BY_ID),
     takeEvery(actions.GET_SAME_GENRE_SONGS, GET_SAME_GENRE_SONGS),
     takeEvery(actions.GET_SAME_SINGER_SONGS, GET_SAME_SINGER_SONGS),
+    takeEvery(actions.GET_HOT_SONGS, GET_HOT_SONGS),
   ])
 }

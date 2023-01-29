@@ -49,7 +49,7 @@ const SongHistory = (props) => {
       payload: {
         'pagination[page]': pagination.current,
         'pagination[pageSize]': pagination.pageSize,
-        populate: ['song.image', 'song.singer'],
+        populate: ['song.image', 'song.singers'],
         filters: {
           user: {
             id: {

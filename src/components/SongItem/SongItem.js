@@ -28,10 +28,10 @@ const SongItem = ({ item }) => {
       </div>
 
       <div style={{ marginTop: '10px' }}>
-        Ca sĩ:
-        {item.attributes && item.attributes.singer.data
+        Ca sĩ: {Array.from(item.attributes.singers.data?.map(e => e.attributes.name)).join()}
+        {/* {item.attributes && item.attributes.singer.data
           ? ` ${item.attributes.singer.data.attributes.name}`
-          : ''}
+          : ''} */}
       </div>
     </Card>
   )
