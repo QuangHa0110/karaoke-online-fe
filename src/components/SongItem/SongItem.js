@@ -19,6 +19,8 @@ const SongItem = ({ item }) => {
             ? formatUrlImage(item.attributes.image.data.attributes.url)
             : null
         }
+        width="320px"
+        height="180px"
         style={{ width: '100%' }}
         alt=""
       />
@@ -28,7 +30,7 @@ const SongItem = ({ item }) => {
       </div>
 
       <div style={{ marginTop: '10px' }}>
-        Ca sĩ: {Array.from(item.attributes.singers.data?.map(e => e.attributes.name)).join()}
+        Ca sĩ: {Array.from(item.attributes.singers.data?.map((e) => e.attributes.name)).join()}
         {/* {item.attributes && item.attributes.singer.data
           ? ` ${item.attributes.singer.data.attributes.name}`
           : ''} */}

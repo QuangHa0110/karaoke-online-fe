@@ -259,6 +259,7 @@ const SongDetailPage = (props) => {
               width="100%"
               height={500}
               playing={isPlaying}
+              pip
               url={
                 song.currentSong
                   ? formatUrlImage(song.currentSong.attributes.media.data.attributes.url)
