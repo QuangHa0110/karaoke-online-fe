@@ -146,6 +146,10 @@ export function* REGISTER({ payload }) {
     })
   }
   if (!success) {
+    notification.error({
+      message: 'Đăng ký tài khoản không thành công',
+    })
+
     yield put({
       type: 'user/SET_STATE',
       payload: {
