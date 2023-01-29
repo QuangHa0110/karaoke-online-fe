@@ -48,6 +48,9 @@ const Home = ({ song, dispatch, slide }) => {
       type: 'song/GET_LATEST_SONGS',
     })
     dispatch({
+      type: 'song/GET_HOT_SONGS',
+    })
+    dispatch({
       type: 'slide/GET_SLIDES',
       payload: {
         populate: '*',
@@ -79,7 +82,7 @@ const Home = ({ song, dispatch, slide }) => {
         </Card>
         <br />
         <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT HOT NHẤT</h3>}>
-          <SongList data={song.latestSongs} />
+          <SongList data={song.hotSongs} />
         </Card>
       </div>
     </div>

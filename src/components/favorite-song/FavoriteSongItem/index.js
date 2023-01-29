@@ -64,8 +64,10 @@ const FavoriteSongItem = (props) => {
         <Col span={10}>
           <h4>{item && item.attributes.song ? item.attributes.song.data.attributes.name : null}</h4>
           <div>
-            {item && item.attributes.song && item.attributes.song.data.attributes.singer.data
-              ? item.attributes.song.data.attributes.singer.data.attributes.name
+            {item && item.attributes.song && item.attributes.song.data.attributes.singers?.data
+              ? Array.from(
+                  item.attributes.song.data.attributes.singers.data?.map((e) => e.attributes.name),
+                ).join()
               : null}
           </div>
         </Col>

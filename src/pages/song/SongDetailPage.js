@@ -42,10 +42,11 @@ const SongDetailPage = (props) => {
   // get id from path url
   const { id } = useParams()
   const { authorized, dispatch, song, user, favoriteSong } = props
-  const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({
-    screen: true,
-    video: true,
-  })
+  const { status, startRecording, stopRecording, mediaBlobUrl, clearBlobUrl } =
+    useReactMediaRecorder({
+      screen: true,
+      video: true,
+    })
   useEffect(() => {
     dispatch({
       type: 'song/GET_SONG_BY_ID',
@@ -82,12 +83,12 @@ const SongDetailPage = (props) => {
           genre: song.currentSong.attributes.genre,
         },
       })
-      if (song.currentSong.attributes.singer.data) {
+      if (song.currentSong.attributes.singers.data) {
         dispatch({
           type: 'song/GET_SAME_SINGER_SONGS',
           payload: {
             id,
-            singerId: song.currentSong.attributes.singer.data.id,
+            singerIds: song.currentSong.attributes.singers.data?.map((e) => e.id),
           },
         })
       } else {
@@ -219,6 +220,7 @@ const SongDetailPage = (props) => {
       <Modal
         title="Lưu ghi âm"
         width="50%"
+        destroyOnClose
         open={isModalOpen}
         onOk={handleOk}
         okText="Lưu"
@@ -239,9 +241,14 @@ const SongDetailPage = (props) => {
         <Row>
           <h3 style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>
             {song.currentSong ? song.currentSong.attributes.name : ''}{' '}
-            {song.currentSong && song.currentSong.attributes.singer.data
-              ? `- ${song.currentSong.attributes.singer.data.attributes.name}`
+            {song.currentSong && song.currentSong.attributes.singers.data
+              ? `- ${Array.from(
+                  song.currentSong.attributes.singers.data?.map((e) => e.attributes.name),
+                ).join()}`
               : ''}
+            {/* {song.currentSong && song.currentSong.attributes.singer.data
+              ? `- ${song.currentSong.attributes.singer.data.attributes.name}`
+              : ''} */}
           </h3>
         </Row>
         <br />
@@ -297,9 +304,12 @@ const SongDetailPage = (props) => {
               {song.currentSong ? MUSIC_GENRE_LABEL[song.currentSong.attributes.genre] : ''}
             </h5>
             <h5>
-              {song.currentSong && song.currentSong.attributes.singer.data ? (
+              {song.currentSong && song.currentSong.attributes.singers.data ? (
                 <>
-                  <b>Ca sĩ:</b> {song.currentSong.attributes.singer.data.attributes.name}
+                  <b>Ca sĩ:</b>{' '}
+                  {Array.from(
+                    song.currentSong.attributes.singers.data?.map((e) => e.attributes.name),
+                  ).join()}
                 </>
               ) : null}
             </h5>

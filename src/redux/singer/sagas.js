@@ -78,7 +78,7 @@ export function* GET_SONGS_OF_SINGER({ payload }) {
   })
   const body = {
     filters: {
-      singer: {
+      singers: {
         id: {
           $eq: payload.id,
         },
