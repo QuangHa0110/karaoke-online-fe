@@ -133,6 +133,11 @@ const routes = [
     Component: lazy(() => import('pages/auth/reset-password/ResetPassword')),
     exact: true,
   },
+  {
+    path: '/auth/verify-account',
+    Component: lazy(() => import('pages/auth/verify-account')),
+    exact: true,
+  },
 
   {
     path: '/auth/register',
