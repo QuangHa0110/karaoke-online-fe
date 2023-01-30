@@ -248,9 +248,6 @@ const SongDetailPage = (props) => {
                   song.currentSong.attributes.singers.data?.map((e) => e.attributes.name),
                 ).join()}`
               : ''}
-            {/* {song.currentSong && song.currentSong.attributes.singer.data
-              ? `- ${song.currentSong.attributes.singer.data.attributes.name}`
-              : ''} */}
           </h3>
         </Row>
         <br />
@@ -344,13 +341,6 @@ const SongDetailPage = (props) => {
         </Row>
       </Card>
       <br />
-      {/* <div>
-        <p>{status}</p>
-
-        <ReactPlayer width="100%" height={500} playing url={mediaBlobUrl} controls />
-        <video src={mediaBlobUrl} controls autoPlay loop />
-      </div>
-      <br /> */}
       <Card title={<h3 style={{ fontWeight: 'bold' }}>BÀI HÁT CÙNG THỂ LOẠI</h3>}>
         <SongList data={song.sameGenreSongs} />
       </Card>
