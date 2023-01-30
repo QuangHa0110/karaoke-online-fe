@@ -19,6 +19,8 @@ const SongItem = ({ item }) => {
             ? formatUrlImage(item.attributes.image.data.attributes.url)
             : null
         }
+        width="320px"
+        height="180px"
         style={{ width: '100%' }}
         alt=""
       />
