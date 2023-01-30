@@ -28,6 +28,7 @@ import FormItem from 'antd/es/form/FormItem'
 import moment from 'moment'
 import UploadFileAPI from 'services/api/upload-file.api'
 import apiClient from 'services/axios'
+import copy from 'copy-to-clipboard'
 import styles from './style.module.scss'
 
 const mapStateToProps = ({ user, dispatch, song, favoriteSong }) => ({
@@ -197,6 +198,7 @@ const SongDetailPage = (props) => {
         type: 'my-song/CREATE_MY_SONG',
         payload,
       })
+      copy(formatUrlImage(response.data[0].url))
     }
 
     return response
@@ -259,6 +261,7 @@ const SongDetailPage = (props) => {
               width="100%"
               height={500}
               playing={isPlaying}
+              pip
               url={
                 song.currentSong
                   ? formatUrlImage(song.currentSong.attributes.media.data.attributes.url)

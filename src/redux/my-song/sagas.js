@@ -8,7 +8,7 @@ export function* CREATE_MY_SONG({ payload }) {
   const success = yield call(MySongAPI.createMySong, payload)
   if (success) {
     notification.success({
-      message: 'Lưu ghi âm thành công',
+      message: 'Lưu ghi âm thành công. Đã copy đường dẫn chia sẻ vào bộ nhớ tạm',
     })
   } else {
     notification.error({
